@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "244762005521",
+    "project_id": "villaoriginal-b6643",
+    "storage_bucket": "villaoriginal-b6643.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244762005521:android:bdb38b42a742c2f3b161b0",
+        "android_client_info": {
+          "package_name": "com.villaoriginal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244762005521-e1di64af680esc1rdmk5o1n7e6nqmbmu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlERTOZE3ESycGQ45xqKtZYFTi5wt-MVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244762005521-e1di64af680esc1rdmk5o1n7e6nqmbmu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
