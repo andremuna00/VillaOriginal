@@ -21,6 +21,7 @@ export default function HomeScreen({route, navigation }) {
         if (!user) {
             navigation.navigate('Login');
         }
+        else {
         //get roles of the user
         const db = firebase.firestore();
         const userRef = db.collection('users').doc(user.uid);
@@ -34,6 +35,7 @@ export default function HomeScreen({route, navigation }) {
                     setAdmin(false)
             }
         });
+        }
     }
 
     //display four buttons for each of the four categories: party, people, manage and logout; people and manage are visible only to admin
