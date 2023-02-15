@@ -1,0 +1,39 @@
+{
+    "project_info": {
+      "project_number": "1027341051588",
+      "project_id": "muhouse-78aed",
+      "storage_bucket": "muhouse-78aed.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:1027341051588:android:0539617609d06e052c0b91",
+          "android_client_info": {
+            "package_name": "com.muhouse"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "1027341051588-2gj383ivoeaal0vf9hjnauisfim41nfl.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyAu9LbqFQL2JUPyjGlZ2tgOD1wdBW-m7do"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "1027341051588-2gj383ivoeaal0vf9hjnauisfim41nfl.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
