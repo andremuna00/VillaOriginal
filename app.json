@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Villa Original",
-    "slug": "Villa Original",
+    "slug": "VillaOriginal",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,16 +28,16 @@
       "package": "com.villaoriginal"
     },
     "androidNavigationBar": {
-        "visible": "sticky-immersive",
-        "backgroundColor": "#00000000"
-     },
+      "visible": "sticky-immersive",
+      "backgroundColor": "#00000000"
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-        "eas": {
-          "projectId": ""
-        }
+      "eas": {
+        "projectId": "61d298c5-47b3-43b8-9e35-9be7ae6374a0"
       }
+    }
   }
 }
