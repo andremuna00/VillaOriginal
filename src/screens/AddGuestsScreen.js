@@ -42,23 +42,6 @@ export default function AddGuestScreen({route, navigation }){
         peopleRef.onSnapshot(onCollectionUpdate);
     }, []);
 
-    //delete person from database
-    const onDeletePress = (person) => {
-        peopleRef
-            .doc(person.id)
-            .delete()
-            .then(() => {
-                alert("Person deleted!");
-            })
-            .catch((error) => {
-                alert(error);
-            });
-    }
-
-    //edit person from database
-    const onEditPress = (person) => {
-        navigation.navigate('EditPeople', {person: person});
-    }
 
     const onAddPress = (person) => {
         const guestsRef = firebase.firestore().collection('guests');

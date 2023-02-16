@@ -3,7 +3,7 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import {  HomeScreen, LoginScreen, RegisterScreen, PeopleScreen, EditPeopleScreen, ListPeopleScreen,EditItemsShoppingScreen,EditPartyScreen,ListGuestsScreen } from './src/screens'
-import {ListPartyScreen, ManageListGuestsScreen, ManagePartyScreen, ManageShoppingListScreen, PartyScreen, ShoppingListScreen, AddGuestsScreen} from './src/screens'
+import {ListPartyScreen, ManageListGuestsScreen, ManagePartyScreen, ManageShoppingListScreen, PartyScreen, ShoppingListScreen, AddGuestsScreen, AddShoppingItemScreen} from './src/screens'
 
 const Stack = createStackNavigator();
 
@@ -28,6 +28,7 @@ export default function App() {
             <Stack.Screen name="Party" component={PartyScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="ShoppingList" component={ShoppingListScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="AddGuests" component={AddGuestsScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="AddShoppingItem" component={AddShoppingItemScreen} options={{ headerShown: false }}/>
           </>
       </Stack.Navigator>
     </NavigationContainer>

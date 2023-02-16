@@ -14,3 +14,4 @@ export {default as ManageShoppingListScreen} from './ManageShoppingListScreen';
 export {default as PartyScreen} from './PartyScreen';
 export {default as ShoppingListScreen} from './ShoppingListScreen';
 export {default as AddGuestsScreen} from './AddGuestsScreen';
+export {default as AddShoppingItemScreen} from './AddShoppingItemScreen';

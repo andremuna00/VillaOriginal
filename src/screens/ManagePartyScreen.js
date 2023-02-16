@@ -13,7 +13,7 @@ export default function ManagePartyScreen({route, navigation }) {
                     <Text style={styles.buttonTitle}>List of guests</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ListItemsShopping', {party: route.params.party})}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ManageShoppingList', {party: route.params.party})}>
                     <Text style={styles.buttonTitle}>List of shopping items</Text>
                 </TouchableOpacity>
 
