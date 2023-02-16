@@ -11,6 +11,7 @@ export default function EditPartyScreen({route, navigation }) {
     const [name, setName] = useState(party ? party.name : '');
     const [date, setDate] = useState(party ? party.date : '');
     const [notes, setNotes] = useState(party ? party.notes : '');
+    const [price, setPrice] = useState(party ? party.price : '');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -26,7 +27,8 @@ export default function EditPartyScreen({route, navigation }) {
                 name: name,
                 date: date,
                 notes: notes,
-                creator_id: party.creator_id
+                creator_id: party.creator_id,
+                price: price
             })
             .then(() => {
                 setLoading(false);
@@ -47,6 +49,7 @@ export default function EditPartyScreen({route, navigation }) {
                 name: name,
                 date: date,
                 notes: notes,
+                price: price,
                 creator_id: firebase.auth().currentUser.uid
             })
             .then(() => {
@@ -74,6 +77,9 @@ export default function EditPartyScreen({route, navigation }) {
 
                     <Text style={styles.inputTitle}>Date</Text>
                     <TextInput style={styles.input} autoCapitalize="none" onChangeText={date => setDate(date)} value={date}></TextInput>
+
+                    <Text style={styles.inputTitle}>Price</Text>
+                    <TextInput style={styles.input} autoCapitalize="none" onChangeText={price => setPrice(price)} value={price}></TextInput>
 
                     <Text style={styles.inputTitle}>Notes</Text>
                     <TextInput style={styles.input} autoCapitalize="none" onChangeText={notes => setNotes(notes)} value={notes}></TextInput>

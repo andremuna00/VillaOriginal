@@ -14,14 +14,19 @@ export default function ListPartyScreen({route, navigation }){
     const onCollectionUpdate = (querySnapshot) => {
         const party = [];
         querySnapshot.forEach((doc) => {
-            const { name, date,notes, creator_id } = doc.data();
+            const { name, date,notes, creator_id,price } = doc.data();
             party.push({
                 id: doc.id,
                 name,
                 date,
                 notes,
+                price,
                 creator_id
             });
+            party.sort(function(a, b) {
+                return new Date(b.date) - new Date(a.date);
+            });
+
         });
         setParty(party);
         setLoading(false);
@@ -59,30 +64,28 @@ export default function ListPartyScreen({route, navigation }){
 
     return(
         <View style={styles.container}>
-            <View style={styles.verticalWrapper}>
-                <Text style={styles.title}>List of people</Text>
-                {loading ? <Text>Loading...</Text> : (
-                    <ScrollView>
-                        {party.map((party, index) => {
-                            return (
-                                <View key={index} style={styles.horizontalWrapper}>
-                                    <Text style={styles.text}>{party.name} {party.surname}</Text>
-                                    <TouchableOpacity style={styles.button} onPress={() => onEditPress(party)}>
-                                        <Text style={styles.buttonTitle}>Edit</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.button} onPress={() => onManagePress(party)}>
-                                        <Text style={styles.buttonTitle}>Manage</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.button} onPress={() => onDeletePress(party)}>
-                                        <Text style={styles.buttonTitle}>Delete</Text>
-                                    </TouchableOpacity>
-                                </View>
+            <Text style={styles.title}>List of people</Text>
+            {loading ? <Text>Loading...</Text> : (
+                <ScrollView>
+                    {party.map((party, index) => {
+                        return (
+                            <View key={index} style={styles.listItemContainer}>
+                                <Text style={styles.listItem}>{party.name} {party.surname}</Text>
+                                <TouchableOpacity style={styles.button} onPress={() => onEditPress(party)}>
+                                    <Text style={styles.buttonTitle}>Edit</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button} onPress={() => onManagePress(party)}>
+                                    <Text style={styles.buttonTitle}>Manage</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button} onPress={() => onDeletePress(party)}>
+                                    <Text style={styles.buttonTitle}>Delete</Text>
+                                </TouchableOpacity>
+                            </View>
 
-                            )
-                        })}
-                        </ScrollView>
-                )}
-                </View>
+                        )
+                    })}
+                    </ScrollView>
+            )}
         </View>
     )
 }

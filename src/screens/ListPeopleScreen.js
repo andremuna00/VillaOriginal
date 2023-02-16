@@ -11,6 +11,7 @@ export default function ListPeopleScreen({route, navigation }){
     //get all people from database
     const [people, setPeople] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState('');
 
     const peopleRef = firebase.firestore().collection('people');
     const onCollectionUpdate = (querySnapshot) => {
@@ -57,27 +58,34 @@ export default function ListPeopleScreen({route, navigation }){
 
     return(
         <View style={styles.container}>
-            <View style={styles.verticalWrapper}>
                 <Text style={styles.title}>List of people</Text>
-                {loading ? <Text>Loading...</Text> : (
-                    <ScrollView>
-                        {people.map((person, index) => {
-                            return (
-                                <View key={index} style={styles.horizontalWrapper}>
-                                    <Text style={styles.text}>{person.name} {person.surname} {person.birthday} {person.instagram}</Text>
-                                    <TouchableOpacity style={styles.button} onPress={() => onEditPress(person)}>
+                <TextInput
+                    style={styles.inputSearch}
+                    placeholder='Search'
+                    placeholderTextColor="#aaaaaa"
+                    onChangeText={(text) => setSearch(text)}
+                    value={search}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                />
+                <ScrollView>
+                    {people.map((person, index) => {
+                        return (
+                            (person.name.toLowerCase().includes(search.toLowerCase())||person.surname.toLowerCase().includes(search.toLowerCase())) &&
+                            <View style={styles.listItemContainer} key={person.index}>
+                                <Text style={styles.listItem}>{person.name} {person.surname}</Text>
+                                <TouchableOpacity style={styles.button} onPress={() => onEditPress(person)}>
+                                    <Text style={styles.buttonTitle}>Edit</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button} onPress={() => onDeletePress(person)}>
+                                    <Text style={styles.buttonTitle}>Delete</Text>
+                                </TouchableOpacity>
 
-                                        <Text style={styles.buttonTitle}>Edit</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.button} onPress={() => onDeletePress(person)}>
-                                        <Text style={styles.buttonTitle}>Delete</Text>
-                                    </TouchableOpacity>
-                                    </View>
-                            )
-                        })}
-                        </ScrollView>
-                )}
-                </View>
+                                </View>
+                        )
+                    })}
+                </ScrollView>
+
         </View>
     )
 }

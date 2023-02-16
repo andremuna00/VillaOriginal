@@ -40,12 +40,10 @@ export default function HomeScreen({route, navigation }) {
 
     //display four buttons for each of the four categories: party, people, manage and logout; people and manage are visible only to admin
     return (
-        <View styles={styles.container}>
+        <View style={styles.container}>
+        <Text style={styles.title}>Home Screen</Text>
             <View style={styles.verticalWrapper}>
-                <Text style={styles.title}>Home Screen</Text>
-
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Party')}>
-
                     <Text style={styles.buttonTitle}>Party</Text>
 
                 </TouchableOpacity>

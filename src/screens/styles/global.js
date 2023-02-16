@@ -38,6 +38,7 @@ export default StyleSheet.create({
         borderBottomColor: '#8A8F9E',
         borderBottomWidth: StyleSheet.hairlineWidth,
         height: 40,
+        width: 300,
         fontSize: 15,
         color: '#161F3D',
     },
@@ -48,6 +49,7 @@ export default StyleSheet.create({
         height: 52,
         alignItems: 'center',
         justifyContent: 'center',
+        padding:10
     },
     buttonTitle: {
         color: '#FFF',
@@ -60,6 +62,7 @@ export default StyleSheet.create({
     },
     verticalWrapper: {
         flex: 1,
+        paddingVertical: 280,
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
@@ -73,6 +76,57 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: '#000',
     },
+    listItemContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        margin: 2,
+        borderColor: '#2a4944',
+        borderWidth: 1,
+        backgroundColor: '#d2f7f1',
+    },
+    listItem: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#000',
+    },
+    inputSearch: {
+        height: 40,
+        width: 300,
+        fontSize: 15,
+        color: '#161F3D',
+        borderColor: '#8A8F9E',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+        margin: 10,
+    },
+    listItemButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    listItemButton: {
+        backgroundColor: '#E9446A',
+        borderRadius: 4,
+        height: 52,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        margin: 5,
+    },
+    listItemButtonText: {
+        color: '#FFF',
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+    listContainer: {
+        flex: 1,
+        width: '100%',
+        padding: 16,
+    },
+    
     
 
 });
