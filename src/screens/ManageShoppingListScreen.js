@@ -22,7 +22,6 @@ export default function ManageShoppingListScreen({route, navigation }) {
         const promises = [];
         querySnapshot.forEach((doc) => {
             const { item_id, bought, party_id } = doc.data();
-            console.log(doc);
                 promises.push(
                     firebase.firestore().collection('items').doc(item_id).get().then((doc_per) => {
                         const { name,price,notes,creator_id } = doc_per.data();
@@ -40,7 +39,6 @@ export default function ManageShoppingListScreen({route, navigation }) {
                 ));
         });
         Promise.all(promises).then(() => {
-            console.log(shoppingList);
             setShoppingList(shoppingList);
             setLoading(false);
         });

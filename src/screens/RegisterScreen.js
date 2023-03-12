@@ -19,7 +19,7 @@ export default function RegisterScreen({route, navigation }) {
                 .createUserWithEmailAndPassword(email, password)
                 .then(() => {
                     setLoading(false);
-                    navigation.navigate('Home');
+                    navigation.navigate('Login');
                 })
                 .catch(error => {
                     setLoading(false);

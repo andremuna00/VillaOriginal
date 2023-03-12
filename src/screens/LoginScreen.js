@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen({route, navigation }) {
 
@@ -20,7 +20,32 @@ export default function LoginScreen({route, navigation }) {
             .signInWithEmailAndPassword(email, password)
             .then(() => {
                 setLoading(false);
-                navigation.navigate('Home');
+                //save user data in local storage
+                const user = firebase.auth().currentUser;
+                const uid = user.uid;
+                const email = user.email;
+                const name = user.displayName;
+                const photoUrl = user.photoURL;
+                const emailVerified = user.emailVerified;
+                const phoneNumber = user.phoneNumber;
+                const providerData = user.providerData;
+                const userObj = {
+                    uid: uid,
+                    email: email,
+                    name: name,
+                    photoUrl: photoUrl,
+                    emailVerified: emailVerified,
+                    phoneNumber: phoneNumber,
+                    providerData: providerData,
+                    password: password
+                };
+                //save user data in local storage
+                AsyncStorage.setItem('user', JSON.stringify(userObj));
+
+                navigation.reset({
+                    index: 0,
+                    routes: [{name: 'Home'}],
+                  });
             })
             .catch(error => {
                 setLoading(false);

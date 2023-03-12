@@ -19,7 +19,6 @@ export default function AddGuestScreen({route, navigation }){
         querySnapshot.forEach((doc) => {
             const { name,surname,birthday,phone,city,instagram,notes,creator_id } = doc.data();
             //check that person is not already added to event
-            console.log(route.params.guests.filter(guest => guest.person_id === doc.id).length);
             if(route.params.guests.filter(guest => guest.person_id === doc.id).length==0){
                 people.push({
                     id: doc.id,
