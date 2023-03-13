@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
+import { ImageBackground } from 'react-native';
 
 export default function RegisterScreen({route, navigation }) {
     
@@ -29,6 +30,7 @@ export default function RegisterScreen({route, navigation }) {
     
         return (
             <View style={styles.container}>
+            <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
                 <Text style={styles.greeting}>{`Hello again. \nWelcome back.`}</Text>
     
                 <View style={styles.errorMessage}>
@@ -71,6 +73,7 @@ export default function RegisterScreen({route, navigation }) {
                         New to SocialApp? <Text style={{ fontWeight: "500", color: "#E9446A" }}>Login</Text>
                     </Text>
                 </TouchableOpacity>
+                </ImageBackground>
             </View>
         );
 

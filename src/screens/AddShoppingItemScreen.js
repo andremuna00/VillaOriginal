@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
+import { ImageBackground } from 'react-native';
 
 
 //display list of all people to database showing name, surname, birthday year, instagram link, edit button, delete button
@@ -49,24 +50,22 @@ export default function AddShoppingItemScreen({route, navigation }){
                 party_id: route.params.party.id
             }
         ).then((docRef) => {
-            alert("Item added!");
             navigation.goBack();
         }
         ).catch((error) => {
             alert(error);
-        }
-
-                
+        }       
         )
     }
 
 
     return(
         <View style={styles.container}>
-            <Text style={styles.title}>Add item to shopping list</Text>
+        <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.title}>Aggiungi alla lista della spesa</Text>
             <TextInput
                 style={styles.input}
-                placeholder='Search'
+                placeholder='Cerca'
                 placeholderTextColor="#aaaaaa"
                 onChangeText={(text) => setSearch(text)}
                 value={search}
@@ -74,22 +73,36 @@ export default function AddShoppingItemScreen({route, navigation }){
                 autoCapitalize="none"
             />
             <ScrollView>
+                {
+                    items.length == 0 && !loading && items.filter((item) => item.name.toLowerCase().includes(search.toLowerCase())||item.surname.toLowerCase().includes(search.toLowerCase())).length == 0 && (
+                            <View style={styles.listItemContainer}>
+                                <Text style={styles.listItem}>No prodotti trovati</Text>
+                            </View>
+                    )
+                }
                 {items.map((item) => {
                     return (
-                        <View style={styles.item} key={item.id}>
-                            <Text style={styles.itemName}>{item.name}</Text>
-                            <Text style={styles.itemPrice}>{item.price} $</Text>
+                        (item.name.toLowerCase().includes(search.toLowerCase())||item.surname.toLowerCase().includes(search.toLowerCase())) &&
+                        <View style={styles.listItemView} key={item.id}>
+                            <Text style={styles.listItemTitle}>{item.name} - {item.price}€</Text>
                             <TouchableOpacity
                                 style={styles.button}
-                                onPress={() => onAddPress(item)}
-                            >
-                                <Text style={styles.buttonTitle}>Add</Text>
+                                onPress={() => onAddPress(item)}>
+                                <Text style={styles.buttonTitle}>Aggiungi</Text>
                             </TouchableOpacity>
+
                         </View>
                     )
                 }
                 )}
             </ScrollView>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('EditItemsShopping', {item: null, onAddPress: onAddPress, goBack: "AddShoppingItem"})}
+            >
+                <Text style={styles.buttonTitle}>Aggiungi nuovo prodotto</Text>
+            </TouchableOpacity>
+            </ImageBackground>
         </View>
 
     )

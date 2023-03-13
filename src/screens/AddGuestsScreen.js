@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
+import { ImageBackground } from 'react-native';
 
 
 //display list of all people to database showing name, surname, birthday year, instagram link, edit button, delete button
@@ -63,7 +64,7 @@ export default function AddGuestScreen({route, navigation }){
                 }
                 );
         
-                navigation.navigate('ListGuests', {party: route.params.party});
+                //navigation.navigate('ListGuests', {party: route.params.party});
             }
         });
 
@@ -72,10 +73,11 @@ export default function AddGuestScreen({route, navigation }){
 
     return(
         <View style={styles.container}>
-                <Text style={styles.title}>List of people</Text>
+            <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+                <Text style={styles.title}>Aggiungi in lista</Text>
                 <TextInput
                     style={styles.inputSearch}
-                    placeholder='Search'
+                    placeholder='Cerca'
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setSearch(text)}
                     value={search}
@@ -86,14 +88,7 @@ export default function AddGuestScreen({route, navigation }){
                     {
                         people.length == 0 && !loading && people.filter((person) => person.name.toLowerCase().includes(search.toLowerCase())||person.surname.toLowerCase().includes(search.toLowerCase())).length == 0 && (
                             <View style={styles.listItemContainer}>
-                                <Text style={styles.listItem}>No people found</Text>
-                                <TouchableOpacity
-                                    style={styles.button}
-                                    onPress={() => navigation.navigate('EditPeople', {person: null, onAddPress: onAddPress, goBack: "AddGuests"})}
-                                >
-                                    <Text style={styles.buttonTitle}>Add person</Text>
-                                </TouchableOpacity>
-
+                                <Text style={styles.listItem}>No persone trovate</Text>
                             </View>
                         )
                     }
@@ -102,23 +97,25 @@ export default function AddGuestScreen({route, navigation }){
                         return (
 
                             (person.name.toLowerCase().includes(search.toLowerCase())||person.surname.toLowerCase().includes(search.toLowerCase())) &&
-                            <View style={styles.listItemContainer} key={person.index}>
-                                <Text style={styles.listItem}>{person.name} {person.surname}</Text>
-
+                            <View style={styles.listItemView} key={person.id}>
+                                <Text style={styles.listItemTitle}>{person.name} {person.surname}</Text>
                                 <TouchableOpacity
                                     style={styles.button}
-                                    onPress={() => onAddPress(person)}
-                                >
-                                    <Text style={styles.buttonTitle}>Add</Text>
+                                    onPress={() => onAddPress(person)}>
+                                    <Text style={styles.buttonTitle}>Aggiungi</Text>
                                 </TouchableOpacity>
-
                             </View>
-
                         )
 
                     })}
                 </ScrollView>
-
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('EditPeople', {person: null, onAddPress: onAddPress, goBack: "AddGuests"})}
+                >
+                    <Text style={styles.buttonTitle}>Aggiungi nuova persona</Text>
+                </TouchableOpacity>
+            </ImageBackground>
         </View>
     )
 }

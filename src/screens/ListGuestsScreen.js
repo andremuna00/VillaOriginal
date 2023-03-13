@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, FlatList, Activity
 import CheckBox from 'expo-checkbox'
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
-
+import { ImageBackground } from 'react-native';
 
 
 //before list button to add guest and select from list of people (with search bar)
@@ -56,17 +56,19 @@ export default function ListGuestsScreen({route, navigation }) {
 
     return(
         <View style={styles.container}>
-        <ScrollView>
-                <Text style={styles.title}>List of guests</Text>
+        <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+        
+                <Text style={styles.title}>Lista degli invitati</Text>
                 <TextInput
                     style={styles.inputSearch}
-                    placeholder="Search"
+                    placeholder="Cerca"
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setSearch(text)}
                     value={search}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
+            <ScrollView>
                 <View style={styles.listContainer}>
                     {loading ? (
                         <ActivityIndicator size="large" color="#9e9e9e" />
@@ -99,6 +101,7 @@ export default function ListGuestsScreen({route, navigation }) {
                     )}
                 </View>
                 </ScrollView>
+                </ImageBackground>
             </View>
     );
 

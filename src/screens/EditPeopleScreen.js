@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
+import { ImageBackground } from 'react-native';
 
 
 //page for adding a new person is no one is passed to route to the database to table persone: name, surname, birthday year, phone, city, instagram link, notes, creator_id
@@ -71,15 +72,11 @@ export default function EditPeopleScreen({route, navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.greeting}>{`Hello again. \nWelcome back.`}</Text>
-
-            <View style={styles.errorMessage}>
-                {error ? <Text style={styles.error}>{error}</Text> : null}
-            </View>
-
-            <View style={styles.form}>
+        <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+        <Text style={styles.editTitle}>{person ? "Modifica dati persona" : "Aggiungi nuova persona"}</Text>
+            <View>
                 <View>
-                    <Text style={styles.inputTitle}>Name</Text>
+                    <Text style={styles.inputTitle}>Nome</Text>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
@@ -88,8 +85,8 @@ export default function EditPeopleScreen({route, navigation }) {
                     ></TextInput>
                 </View>
 
-                <View style={{ marginTop: 32 }}>
-                    <Text style={styles.inputTitle}>Surname</Text>
+                <View>
+                    <Text style={styles.inputTitle}>Cognome</Text>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
@@ -98,8 +95,8 @@ export default function EditPeopleScreen({route, navigation }) {
                     ></TextInput>
                 </View>
 
-                <View style={{ marginTop: 32 }}>
-                    <Text style={styles.inputTitle}>Birthday</Text>
+                <View>
+                    <Text style={styles.inputTitle}>Data di Nascita</Text>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
@@ -108,8 +105,8 @@ export default function EditPeopleScreen({route, navigation }) {
                     ></TextInput>
                 </View>
 
-                <View style={{ marginTop: 32 }}>
-                    <Text style={styles.inputTitle}>Phone</Text>
+                <View>
+                    <Text style={styles.inputTitle}>Cellulare</Text>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
@@ -118,18 +115,7 @@ export default function EditPeopleScreen({route, navigation }) {
                     ></TextInput>
                 </View>
 
-                <View style={{ marginTop: 32 }}>
-                    <Text style={styles.inputTitle}>City</Text>
-                    <TextInput
-                        style={styles.input}
-                        autoCapitalize="none"
-                        onChangeText={city => setCity(city)}
-                        value={city}
-                    ></TextInput>
-
-                </View>
-
-                <View style={{ marginTop: 32 }}>
+                <View>
                     <Text style={styles.inputTitle}>Instagram</Text>
                     <TextInput
                         style={styles.input}
@@ -139,8 +125,8 @@ export default function EditPeopleScreen({route, navigation }) {
                     ></TextInput>
                 </View>
 
-                <View style={{ marginTop: 32 }}>
-                    <Text style={styles.inputTitle}>Notes</Text>
+                <View>
+                    <Text style={styles.inputTitle}>Note</Text>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
@@ -152,14 +138,15 @@ export default function EditPeopleScreen({route, navigation }) {
             </View>
 
             <TouchableOpacity style={styles.button} onPress={person ? onEditPress : onAddPress}>
-                <Text style={{ color: "#FFF", fontWeight: "500" }}>{person ? "Edit" : "Add"}</Text>
+                <Text style={{ color: "#FFF", fontWeight: "500" }}>{person ? "Salva" : "Aggiungi"}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{ alignSelf: "center", marginTop: 32 }} onPress={() => navigation.navigate(person ? 'ListPeople':'People')}>
-                <Text style={{ color: "#414959", fontSize: 13 }}>
-                    Go back to people
+            <TouchableOpacity style={{ alignSelf: "center", marginTop: 32 }} onPress={() => navigation.goBack()}>
+                <Text style={styles.goBack}>
+                    {"< Torna indietro"}
                 </Text>
             </TouchableOpacity>
+            </ImageBackground>
         </View>
     )
 

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
+import { ImageBackground } from 'react-native';
 
 
 //page for adding a new item is no one is passed to route to the database to table items: name, price, mark, notes
@@ -30,7 +31,7 @@ export default function EditItemsShoppingScreen({route, navigation }) {
             })
             .then(() => {
                 setLoading(false);
-                navigation.navigate('ListParty');
+                navigation.goBack();
             })
             .catch(error => {
                 setLoading(false);
@@ -52,7 +53,7 @@ export default function EditItemsShoppingScreen({route, navigation }) {
             })
             .then(() => {
                 setLoading(false);
-                navigation.navigate('ListParty');
+                navigation.goBack();
             })
             .catch(error => {
                 setLoading(false);
@@ -62,7 +63,8 @@ export default function EditItemsShoppingScreen({route, navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.greeting}>{`Hello again. \nWelcome back.`}</Text>
+        <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.editTitle}>{items ? "Modifica dati prodotto" : "Aggiungi nuovo prodotto"}</Text>
 
             <View style={styles.errorMessage}>
                 {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -70,26 +72,27 @@ export default function EditItemsShoppingScreen({route, navigation }) {
 
             <View style={styles.form}>
                 <View>
-                    <Text style={styles.inputTitle}>Name</Text>
+                    <Text style={styles.inputTitle}>Nome</Text>
                     <TextInput style={styles.input} autoCapitalize="none" onChangeText={name => setName(name)} value={name}></TextInput>
 
-                    <Text style={styles.inputTitle}>Price</Text>
+                    <Text style={styles.inputTitle}>Prezzo</Text>
                     <TextInput style={styles.input} autoCapitalize="none" onChangeText={price => setPrice(price)} value={price}></TextInput>
 
-                    <Text style={styles.inputTitle}>Mark</Text>
+                    <Text style={styles.inputTitle}>Marca/Negozio</Text>
                     <TextInput style={styles.input} autoCapitalize="none" onChangeText={mark => setMark(mark)} value={mark}></TextInput>
                 </View>
             </View>
 
             <TouchableOpacity style={styles.button} onPress={items ? onEditPress : onAddPress}>
-                <Text style={{ color: "#FFF", fontWeight: "500" }}>{items ? "Edit" : "Add"}</Text>
+                <Text style={{ color: "#FFF", fontWeight: "500" }}>{items ? "Salva" : "Aggiungi"}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{ alignSelf: "center", marginTop: 32 }} onPress={() => navigation.navigate(items ? 'ListParty':'Party')}>
-                <Text style={{ color: "#414959", fontSize: 13 }}>
-                    Go back to party
+            <TouchableOpacity style={{ alignSelf: "center", marginTop: 32 }} onPress={() => navigation.goBack()}>
+                <Text style={styles.goBack}>
+                    {"< Torna indietro"}
                 </Text>
             </TouchableOpacity>
+            </ImageBackground>
         </View>
     )
 

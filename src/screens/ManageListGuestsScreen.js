@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, FlatList, Activity
 import CheckBox from 'expo-checkbox'
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
-
+import { ImageBackground } from 'react-native';
 
 
 //before list button to add guest and select from list of people (with search bar)
@@ -63,7 +63,6 @@ export default function ManageGuestsScreen({route, navigation }) {
             .doc(guest.id)
             .delete()
             .then(() => {
-                alert("Guest deleted!");
                 setGuests(guests.filter((item) => item.id !== guest.id));
             })
             .catch((error) => {
@@ -81,17 +80,18 @@ export default function ManageGuestsScreen({route, navigation }) {
 
     return(
         <View style={styles.container}>
-        <ScrollView>
-                <Text style={styles.title}>List of guests</Text>
-                <TextInput
-                    style={styles.inputSearch}
-                    placeholder="Search"
-                    placeholderTextColor="#aaaaaa"
-                    onChangeText={(text) => setSearch(text)}
-                    value={search}
-                    underlineColorAndroid="transparent"
-                    autoCapitalize="none"
-                />
+        <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.title}>Lista degli invitati</Text>
+            <TextInput
+                style={styles.inputSearch}
+                placeholder="Cerca"
+                placeholderTextColor="#aaaaaa"
+                onChangeText={(text) => setSearch(text)}
+                value={search}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+            />
+            <ScrollView>
                 <View style={styles.listContainer}>
                     {loading ? (
                         <ActivityIndicator size="large" color="#9e9e9e" />
@@ -108,7 +108,7 @@ export default function ManageGuestsScreen({route, navigation }) {
                                                 style={styles.listItemButton}
                                                 onPress={() => onEditPress(guest)}
                                             >
-                                                <Text style={styles.listItemButtonText}>Edit</Text>
+                                                <Text style={styles.listItemButtonText}>Modifica</Text>
                                             </TouchableOpacity>
                                             <CheckBox
                                                 disabled={false}
@@ -142,7 +142,7 @@ export default function ManageGuestsScreen({route, navigation }) {
                                                 style={styles.listItemButton}
                                                 onPress={() => onDeletePress(guest)}
                                             >
-                                                <Text style={styles.listItemButtonText}>Delete</Text>
+                                                <Text style={styles.listItemButtonText}>Elimina</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -152,15 +152,15 @@ export default function ManageGuestsScreen({route, navigation }) {
 
                     )}
                 </View>
-                <TouchableOpacity
-
-                    style={styles.button}
-                    onPress={() => navigation.navigate('AddGuests', {party: party, guests: guests})}
-                >
-                    <Text style={styles.buttonTitle}>Add guest</Text>
-                </TouchableOpacity>
-                </ScrollView>
-            </View>
+            </ScrollView>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('AddGuests', {party: party, guests: guests})}
+            >
+                <Text style={styles.buttonTitle}>Aggiungi invitato</Text>
+            </TouchableOpacity>
+            </ImageBackground>
+        </View>
     );
 
 }

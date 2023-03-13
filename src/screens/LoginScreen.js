@@ -4,6 +4,7 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ImageBackground } from 'react-native';
 
 export default function LoginScreen({route, navigation }) {
 
@@ -55,7 +56,8 @@ export default function LoginScreen({route, navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.greeting}>{`Hello again. \nWelcome back.`}</Text>
+        <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.greeting}>{`Ciao. \nBentornato.`}</Text>
 
             <View style={styles.errorMessage}>
                 {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -64,7 +66,7 @@ export default function LoginScreen({route, navigation }) {
             <View style={styles.form}>
 
                 <View>
-                    <Text style={styles.inputTitle}>Email Address</Text>
+                    <Text style={styles.inputTitle}>Email</Text>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
@@ -86,7 +88,7 @@ export default function LoginScreen({route, navigation }) {
             </View>
 
             <TouchableOpacity style={styles.button} onPress={onLoginPress}>
-                <Text style={{ color: "#FFF", fontWeight: "500" }}>Sign in</Text>
+                <Text style={{ color: "#FFF", fontWeight: "500" }}>Login</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -94,9 +96,10 @@ export default function LoginScreen({route, navigation }) {
                 onPress={() => navigation.navigate("Register")}
             >
                 <Text style={{ color: "#414959", fontSize: 13 }}>
-                    New to SocialApp? <Text style={{ fontWeight: "500", color: "#E9446A" }}>Sign up</Text>
+                    New to SocialApp? <Text style={{ fontWeight: "500", color: "#E9446A" }}>Registrati</Text>
                 </Text>
             </TouchableOpacity>
+            </ImageBackground>
         </View>
     );
 

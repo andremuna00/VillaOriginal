@@ -3,7 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { ImageBackground } from 'react-native';
 
 //display list of all people to database showing name, surname, birthday year, instagram link, edit button, delete button
 export default function ListPeopleScreen({route, navigation }){
@@ -58,10 +61,11 @@ export default function ListPeopleScreen({route, navigation }){
 
     return(
         <View style={styles.container}>
-                <Text style={styles.title}>List of people</Text>
+        <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+                <Text style={styles.title}>Lista delle persone</Text>
                 <TextInput
                     style={styles.inputSearch}
-                    placeholder='Search'
+                    placeholder='Cerca'
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setSearch(text)}
                     value={search}
@@ -72,20 +76,22 @@ export default function ListPeopleScreen({route, navigation }){
                     {people.map((person, index) => {
                         return (
                             (person.name.toLowerCase().includes(search.toLowerCase())||person.surname.toLowerCase().includes(search.toLowerCase())) &&
-                            <View style={styles.listItemContainer} key={person.index}>
-                                <Text style={styles.listItem}>{person.name} {person.surname}</Text>
-                                <TouchableOpacity style={styles.button} onPress={() => onEditPress(person)}>
-                                    <Text style={styles.buttonTitle}>Edit</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.button} onPress={() => onDeletePress(person)}>
-                                    <Text style={styles.buttonTitle}>Delete</Text>
-                                </TouchableOpacity>
+                            <View style={styles.listItemContainer} key={person.index}>                    
+                                <View style={styles.listItemView}>
+                                    <Text style={styles.listItemTitle}>{person.name} {person.surname}</Text>
+                                    <TouchableOpacity style={styles.listItem} onPress={() => onEditPress(person)}>
+                                        <FontAwesomeIcon icon={ faEdit } size={ 25 } color="#fff" />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.listItem} onPress={() => onDeletePress(person)}>
+                                        <FontAwesomeIcon icon={ faTrash } size={ 25 } color="#f00" />
+                                    </TouchableOpacity>
+                                </View>
 
                                 </View>
                         )
                     })}
                 </ScrollView>
-
+</ImageBackground>
         </View>
     )
 }

@@ -3,6 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { ImageBackground } from 'react-native';
+
 
 export default function ListPartyScreen({route, navigation }){
 
@@ -64,28 +69,35 @@ export default function ListPartyScreen({route, navigation }){
 
     return(
         <View style={styles.container}>
-            <Text style={styles.title}>List of people</Text>
-            {loading ? <Text>Loading...</Text> : (
+        <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.title}>Lista delle feste</Text>
+            {loading ? <Text>Caricamento...</Text> : (
                 <ScrollView>
                     {party.map((party, index) => {
                         return (
                             <View key={index} style={styles.listItemContainer}>
-                                <Text style={styles.listItem}>{party.name} {party.surname}</Text>
-                                <TouchableOpacity style={styles.button} onPress={() => onEditPress(party)}>
-                                    <Text style={styles.buttonTitle}>Edit</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.button} onPress={() => onManagePress(party)}>
-                                    <Text style={styles.buttonTitle}>Manage</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.button} onPress={() => onDeletePress(party)}>
-                                    <Text style={styles.buttonTitle}>Delete</Text>
-                                </TouchableOpacity>
+                                <View style={styles.listItemView}>
+                                    <Text style={styles.listItemTitle}>{party.name}</Text>
+                                    <TouchableOpacity style={styles.listItem} onPress={() => onEditPress(party)}>
+                                        <FontAwesomeIcon icon={ faEdit } size={ 25 } color="#fff" />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.listItem} onPress={() => onDeletePress(party)}>
+                                        <FontAwesomeIcon icon={ faTrash } size={ 25 } color="#f00" />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.listItemView}>
+                                    <Text style={styles.listItem}>{party.date}</Text>
+                                    <Text style={styles.listItem}>{party.price}€</Text>
+                                    <TouchableOpacity style={styles.listItemButton} onPress={() => onManagePress(party)}>
+                                        <Text style={styles.listItemButtonText}>Organizza</Text>
+                                    </TouchableOpacity>       
+                                </View>                    
                             </View>
-
                         )
                     })}
                     </ScrollView>
             )}
+            </ImageBackground>
         </View>
     )
 }

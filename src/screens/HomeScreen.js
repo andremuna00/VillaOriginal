@@ -4,6 +4,7 @@ import { firebase } from '../firebase/config';
 import { useEffect, useState } from 'react';
 import styles from './styles/global.js';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
+import { ImageBackground } from 'react-native';
 export default function HomeScreen({route, navigation }) {
 
     //check if already logged in otherwise go to login screen using firebase
@@ -79,25 +80,27 @@ export default function HomeScreen({route, navigation }) {
     //display four buttons for each of the four categories: party, people, manage and logout; people and manage are visible only to admin
     return (
         <View style={styles.container}>
-        <Text style={styles.title}>Home Screen</Text>
+            <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+            <Text style={styles.title}>Villa Original</Text>
             <View style={styles.verticalWrapper}>
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Party')}>
-                    <Text style={styles.buttonTitle}>Party</Text>
+                    <Text style={styles.buttonTitle}>Feste</Text>
 
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('People')}>
-                    <Text style={styles.buttonTitle}>People</Text>
+                    <Text style={styles.buttonTitle}>Persone</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.button} onPress={() => admin?navigation.navigate('Manage'):null}>
-                    <Text style={styles.buttonTitle}>Manage</Text>
+                    <Text style={styles.buttonTitle}>Gestisci</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.button} onPress={async () => await Logout()}>
                     <Text style={styles.buttonTitle}>Logout</Text>
                 </TouchableOpacity>
             </View>
+        </ImageBackground>
         </View>
     )
 }
