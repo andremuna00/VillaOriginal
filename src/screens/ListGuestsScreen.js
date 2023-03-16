@@ -24,14 +24,14 @@ export default function ListGuestsScreen({route, navigation }) {
             const { person_id, payed, confirmed, arrived, party_id } = doc.data();
                 promises.push(
                     firebase.firestore().collection('people').doc(person_id).get().then((doc_per) => {
-                        const { name,surname,birthday,phone,city,instagram,notes,creator_id } = doc_per.data();
+                        const { name,surname,birthday,phone,sex,instagram,notes,creator_id } = doc_per.data();
                         guests.push({
                             id: doc.id,
                             name,
                             surname,
                             birthday,
                             phone,
-                            city,
+                            sex,
                             instagram,
                             notes,
                             creator_id,
@@ -45,13 +45,30 @@ export default function ListGuestsScreen({route, navigation }) {
                 );
         });
         Promise.all(promises).then(() => {
+            //ordina per nome e poi per cognome
+            guests.sort((a, b) => {
+                if (a.name < b.name) {
+                    return -1;
+                }
+                if (a.name > b.name) {
+                    return 1;
+                }
+                if (a.surname < b.surname) {
+                    return -1;
+                }
+                if (a.surname > b.surname) {
+                    return 1;
+                }
+                return 0;
+            });
             setGuests(guests);
             setLoading(false);
         });
     }
 
     useEffect(() => {
-        guestsRef.onSnapshot(onCollectionUpdate);
+        //get all guests of party with party_id
+        guestsRef.where("party_id", "==", party.id).onSnapshot(onCollectionUpdate);
     }, []);
 
     return(
@@ -77,12 +94,15 @@ export default function ListGuestsScreen({route, navigation }) {
                         guests.map((guest, index) => {
                             if (guest.name.toLowerCase().includes(search.toLowerCase()) || guest.surname.toLowerCase().includes(search.toLowerCase())) {
                                 return (
-                                    <View style={styles.listItem} key={index}>
-                                        <Text style={styles.listItemText}>{guest.name} {guest.surname}</Text>
+                                    <View style={styles.listItemContainer} key={index}>
+                                        <View style={styles.listItemView}>
+                                        <Text style={guest.arrived?styles.listItemTitleBarred:styles.listItemTitle}>{guest.name} {guest.surname}</Text>
                                             <CheckBox
                                                 disabled={false}
+                                                style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }], marginRight: 10, marginLeft: 10 }}
                                                 value={guest.arrived}
                                                 onValueChange={(newValue) => {
+                                                    guest.arrived = newValue;
                                                     guestsRef
                                                         .doc(guest.id)
                                                         .update({
@@ -93,6 +113,7 @@ export default function ListGuestsScreen({route, navigation }) {
                                                         });
                                                 }}
                                             />
+                                            </View>
                                         </View>
                                 );
                             }

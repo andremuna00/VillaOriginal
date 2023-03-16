@@ -76,7 +76,7 @@ export default function EditItemsShoppingScreen({route, navigation }) {
                     <TextInput style={styles.input} autoCapitalize="none" onChangeText={name => setName(name)} value={name}></TextInput>
 
                     <Text style={styles.inputTitle}>Prezzo</Text>
-                    <TextInput style={styles.input} autoCapitalize="none" onChangeText={price => setPrice(price)} value={price}></TextInput>
+                    <TextInput style={styles.input} keyboardType="numeric" autoCapitalize="none" onChangeText={price => setPrice(price)} value={price}></TextInput>
 
                     <Text style={styles.inputTitle}>Marca/Negozio</Text>
                     <TextInput style={styles.input} autoCapitalize="none" onChangeText={mark => setMark(mark)} value={mark}></TextInput>

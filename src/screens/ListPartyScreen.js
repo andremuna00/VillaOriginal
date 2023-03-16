@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert  } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -42,19 +42,58 @@ export default function ListPartyScreen({route, navigation }){
         return () => unsubscribe();
     }, []);
 
-
+    const showConfirmDialog = (message,party) => {
+        Alert.alert(
+            "Conferma",
+            message,
+            [
+                {
+                    text: "Annulla",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "OK", onPress: () => onDeletePress(party) }
+            ],
+            { cancelable: false }
+        );
+      };
 
     //delete party from database
     const onDeletePress = (party) => {
+
         partyRef
             .doc(party.id)
             .delete()
             .then(() => {
-                alert("party deleted!");
             })
             .catch((error) => {
                 alert(error);
             });
+        
+        //delete all guest from the lists with party_id of this party
+        const guestRef = firebase.firestore().collection('guest');
+        guestRef
+            .where("party_id", "==", party.id)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    doc.ref.delete();
+                });
+            }
+        );
+
+        //delete all item from the shopping_list with party_id of this party
+        const shoppingListRef = firebase.firestore().collection('shopping_list');
+        shoppingListRef
+            .where("party_id", "==", party.id)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    doc.ref.delete();
+                });
+            }
+        );
+
     }
 
     //edit party from database
@@ -81,7 +120,7 @@ export default function ListPartyScreen({route, navigation }){
                                     <TouchableOpacity style={styles.listItem} onPress={() => onEditPress(party)}>
                                         <FontAwesomeIcon icon={ faEdit } size={ 25 } color="#fff" />
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.listItem} onPress={() => onDeletePress(party)}>
+                                    <TouchableOpacity style={styles.listItem} onPress={() => showConfirmDialog("Sicuro di voler cancellare la festa?", party)}>
                                         <FontAwesomeIcon icon={ faTrash } size={ 25 } color="#f00" />
                                     </TouchableOpacity>
                                 </View>

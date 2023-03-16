@@ -18,7 +18,13 @@ export default function RegisterScreen({route, navigation }) {
             setLoading(true);
             auth
                 .createUserWithEmailAndPassword(email, password)
-                .then(() => {
+                .then((userCredential) => {
+                    
+                    firebase.firestore().collection('UserRoles').doc(userCredential.user.uid).set({
+                        email: email,
+                        roles: []   
+                    });
+
                     setLoading(false);
                     navigation.navigate('Login');
                 })

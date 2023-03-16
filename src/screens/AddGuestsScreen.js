@@ -4,7 +4,8 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-nativ
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { ImageBackground } from 'react-native';
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 //display list of all people to database showing name, surname, birthday year, instagram link, edit button, delete button
 export default function AddGuestScreen({route, navigation }){
@@ -18,7 +19,7 @@ export default function AddGuestScreen({route, navigation }){
     const onCollectionUpdate = (querySnapshot) => {
         const people = [];
         querySnapshot.forEach((doc) => {
-            const { name,surname,birthday,phone,city,instagram,notes,creator_id } = doc.data();
+            const { name,surname,birthday,phone,sex,instagram,notes,creator_id } = doc.data();
             //check that person is not already added to event
             if(route.params.guests.filter(guest => guest.person_id === doc.id).length==0){
                 people.push({
@@ -27,7 +28,7 @@ export default function AddGuestScreen({route, navigation }){
                     surname,
                     birthday,
                     phone,
-                    city,
+                    sex,
                     instagram,
                     notes,
                     creator_id
@@ -57,7 +58,7 @@ export default function AddGuestScreen({route, navigation }){
                     arrived: false,
                     party_id: route.params.party.id
                 }).then((docRef) => {
-                    alert("Guest added!");
+                    setPeople(people.filter((p) => p.id !== person.id));
                 }
                 ).catch((error) => {
                     alert(error);
@@ -97,13 +98,17 @@ export default function AddGuestScreen({route, navigation }){
                         return (
 
                             (person.name.toLowerCase().includes(search.toLowerCase())||person.surname.toLowerCase().includes(search.toLowerCase())) &&
-                            <View style={styles.listItemView} key={person.id}>
-                                <Text style={styles.listItemTitle}>{person.name} {person.surname}</Text>
+                            <View  key={person.id}>
+                            <View style={styles.listItemView}>
+                                <Text style={styles.secondaryText}>{person.name} {person.surname}</Text>
                                 <TouchableOpacity
-                                    style={styles.button}
+                                    style={{backgroundColor: "#E9446A", borderRadius: 20, padding: 10, margin : 10}}
                                     onPress={() => onAddPress(person)}>
-                                    <Text style={styles.buttonTitle}>Aggiungi</Text>
+                                    <FontAwesomeIcon icon={ faPlus } size={ 20 } color="#ffffff" />
                                 </TouchableOpacity>
+                                
+                            </View>
+                            <View style={styles.listItemSeparator} />
                             </View>
                         )
 

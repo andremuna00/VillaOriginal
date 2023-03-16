@@ -10,6 +10,7 @@ export default function HomeScreen({route, navigation }) {
     //check if already logged in otherwise go to login screen using firebase
     const [user, setUser] = useState(null);
     const [admin, setAdmin] = useState(false);
+    const [superadmin, setSuperAdmin] = useState(false);
     const auth = firebase.auth();
 
     async function getUser() {
@@ -31,6 +32,26 @@ export default function HomeScreen({route, navigation }) {
                 auth.signInWithEmailAndPassword(user.email, user.password).then(() => {
                     user = firebase.auth().currentUser;
                     setUser(user);
+                    const db = firebase.firestore();
+
+                    const userRef = db.collection('UserRoles').doc(user.uid);
+                    userRef.get().then((doc) => {
+                        if (doc.exists) {
+                            const userRoles = doc.data();
+                            if (userRoles.roles.includes('superadmin'))
+                            {
+                                setSuperAdmin(true);
+                                setAdmin(true);
+                            }
+                            else if (userRoles.roles.includes('admin'))
+                            {
+                                setSuperAdmin(false)
+                                setAdmin(true);
+                            }
+                            else
+                                setAdmin(false)
+                        }
+                    });
                 })
             }
             else {
@@ -52,13 +73,22 @@ export default function HomeScreen({route, navigation }) {
         else {
         //get roles of the user
         const db = firebase.firestore();
-        const userRef = db.collection('users').doc(user.uid);
+        const userRef = db.collection('UserRoles').doc(user.uid);
         userRef.get().then((doc) => {
             if (doc.exists) {
                 const user = doc.data();
+                console.log(user.roles);
 
-                if (user.roles.includes('admin'))
+                if (userRoles.roles.includes('superadmin'))
+                {
+                    setSuperAdmin(true);
                     setAdmin(true);
+                }
+                else if (userRoles.roles.includes('admin'))
+                {
+                    setSuperAdmin(false)
+                    setAdmin(true);
+                }
                 else
                     setAdmin(false)
             }
@@ -83,16 +113,16 @@ export default function HomeScreen({route, navigation }) {
             <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
             <Text style={styles.title}>Villa Original</Text>
             <View style={styles.verticalWrapper}>
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Party')}>
+                <TouchableOpacity style={styles.button} onPress={() => admin?navigation.navigate('Party'):null}>
                     <Text style={styles.buttonTitle}>Feste</Text>
 
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('People')}>
+                <TouchableOpacity style={styles.button} onPress={() => admin?navigation.navigate('People'):null}>
                     <Text style={styles.buttonTitle}>Persone</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => admin?navigation.navigate('Manage'):null}>
+                <TouchableOpacity style={styles.button} onPress={() => superadmin?navigation.navigate('Manage'):null}>
                     <Text style={styles.buttonTitle}>Gestisci</Text>
                 </TouchableOpacity>
 

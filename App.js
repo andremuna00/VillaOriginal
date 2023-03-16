@@ -3,7 +3,7 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import {  HomeScreen, LoginScreen, RegisterScreen, PeopleScreen, EditPeopleScreen, ListPeopleScreen,EditItemsShoppingScreen,EditPartyScreen,ListGuestsScreen } from './src/screens'
-import {ListPartyScreen, ManageListGuestsScreen, ManagePartyScreen, ManageShoppingListScreen, PartyScreen, ShoppingListScreen, AddGuestsScreen, AddShoppingItemScreen} from './src/screens'
+import {ListPartyScreen, ManageListGuestsScreen, ManagePartyScreen, ManageShoppingListScreen, PartyScreen, ShoppingListScreen, AddGuestsScreen, AddShoppingItemScreen, ManageScreen} from './src/screens'
 
 const Stack = createStackNavigator();
 
@@ -15,6 +15,7 @@ export default function App() {
             <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="Manage" component={ManageScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="People" component={PeopleScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="EditPeople" component={EditPeopleScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="ListPeople" component={ListPeopleScreen} options={{ headerShown: false }}/>

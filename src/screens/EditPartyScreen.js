@@ -81,7 +81,7 @@ export default function EditPartyScreen({route, navigation }) {
                     <TextInput style={styles.input} autoCapitalize="none" onChangeText={date => setDate(date)} value={date}></TextInput>
 
                     <Text style={styles.inputTitle}>Prezzo</Text>
-                    <TextInput style={styles.input} autoCapitalize="none" onChangeText={price => setPrice(price)} value={price}></TextInput>
+                    <TextInput style={styles.input} autoCapitalize="none" keyboardType="numeric" onChangeText={price => setPrice(price)} value={price}></TextInput>
 
                     <Text style={styles.inputTitle}>Note</Text>
                     <TextInput style={styles.input} autoCapitalize="none" onChangeText={notes => setNotes(notes)} value={notes}></TextInput>

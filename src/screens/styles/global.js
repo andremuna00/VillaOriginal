@@ -32,7 +32,12 @@ export default StyleSheet.create({
         textShadowRadius: 10,
         textShadowRadius: 20,
     },
+    secondaryText:{
+        color: '#FFF',
+        fontSize: 12,
+        fontStyle: 'italic',
 
+    },
     errorMessage: {
         height: 72,
         alignItems: 'center',
@@ -148,13 +153,27 @@ export default StyleSheet.create({
         padding: 10,
         margin: 10,
     },
+    listItemTitleBarred:
+    {
+        fontSize: 20,
+        margin: 10,
+        fontWeight: 'bold',
+        backgroundColor: '#8A8F9E22',
+        color: '#8A8F9E',
+        textDecorationLine: 'line-through',
+    },
+    listItemSeparator: {
+        height: 1,
+        width: '100%',
+        backgroundColor: '#ccc',
+    },
     listItemButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
     listItemButton: {
-        backgroundColor: '#2196F3',
+        backgroundColor: '#E9446A',
         borderRadius: 5,
         height: 52,
         margin:10,

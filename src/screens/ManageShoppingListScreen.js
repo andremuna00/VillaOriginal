@@ -47,7 +47,8 @@ export default function ManageShoppingListScreen({route, navigation }) {
     }
 
     useEffect(() => {
-        shoppingListRef.onSnapshot(onCollectionUpdate);
+        shoppingListRef.where("party_id", "==", party.id).onSnapshot(onCollectionUpdate);
+
     }, []);
 
     //delete listitem from database

@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, FlatList, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, FlatList, ActivityIndicator, Linking } from 'react-native';
 import CheckBox from 'expo-checkbox'
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { ImageBackground } from 'react-native';
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import {faInstagram} from '@fortawesome/free-brands-svg-icons';
 
 //before list button to add guest and select from list of people (with search bar)
 //list of guest with checkboxes if payed or not, if confirmed or not, edit button, delete button
@@ -16,6 +18,19 @@ export default function ManageGuestsScreen({route, navigation }) {
 
     const guestsRef = firebase.firestore().collection('guests');
     
+    const handlePress = async (url) => {
+        // Checking if the link is supported for links with custom URL scheme.
+        const supported = await Linking.canOpenURL(url);
+    
+        if (supported) {
+          // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+          // by some browser in the mobile
+          await Linking.openURL(url);
+        } else {
+          Alert.alert(`Don't know how to open this URL: ${url}`);
+        }
+      };
+
     //get list of guest and with person_id get person data with array of promises
     const onCollectionUpdate = (querySnapshot) => {
         const guests = [];
@@ -24,14 +39,14 @@ export default function ManageGuestsScreen({route, navigation }) {
             const { person_id, payed, confirmed, arrived, party_id } = doc.data();
                 promises.push(
                     firebase.firestore().collection('people').doc(person_id).get().then((doc_per) => {
-                        const { name,surname,birthday,phone,city,instagram,notes,creator_id } = doc_per.data();
+                        const { name,surname,birthday,phone,sex,instagram,notes,creator_id } = doc_per.data();
                         guests.push({
                             id: doc.id,
                             name,
                             surname,
                             birthday,
                             phone,
-                            city,
+                            sex,
                             instagram,
                             notes,
                             creator_id,
@@ -54,7 +69,7 @@ export default function ManageGuestsScreen({route, navigation }) {
 
 
     useEffect(() => {
-        guestsRef.onSnapshot(onCollectionUpdate);
+        guestsRef.where("party_id", "==", party.id).onSnapshot(onCollectionUpdate);
     }, []);
 
     //delete guest from database
@@ -75,8 +90,9 @@ export default function ManageGuestsScreen({route, navigation }) {
         navigation.navigate('EditPeople', {person: guest});
     }
 
-
-
+    const onInstagramPress = (guest) => {
+        navigation.navigate('Instagram', {person: guest});
+    }
 
     return(
         <View style={styles.container}>
@@ -100,18 +116,26 @@ export default function ManageGuestsScreen({route, navigation }) {
                         guests.map((guest, index) => {
                             if (guest.name.toLowerCase().includes(search.toLowerCase()) || guest.surname.toLowerCase().includes(search.toLowerCase())) {
                                 return (
-                                    <View style={styles.listItem} key={index}>
-                                        <Text style={styles.listItemText}>{guest.name} {guest.surname}</Text>
-                                        <View style={styles.listItemButtons}>
+                                    <View style={styles.listItemContainer} key={index}>
+                                        <View style={styles.listItemView}>
+                                            <Text style={styles.listItemTitle}>{guest.name} {guest.surname}</Text>
 
-                                            <TouchableOpacity
-                                                style={styles.listItemButton}
-                                                onPress={() => onEditPress(guest)}
-                                            >
-                                                <Text style={styles.listItemButtonText}>Modifica</Text>
+                                            {guest.instagram!=null && guest.instagram!="" &&<TouchableOpacity onPress={()=> handlePress(guest.instagram)} style={styles.listItem} >
+                                                <FontAwesomeIcon icon={ faInstagram } size={ 25 } color="#fff" />
+                                            </TouchableOpacity>}
+                                            <TouchableOpacity style={styles.listItem} onPress={() =>{
+                                                guest.id = guest.person_id;
+                                                onEditPress(guest)}}>
+                                                <FontAwesomeIcon icon={ faEdit } size={ 25 } color="#fff" />
                                             </TouchableOpacity>
+                                            <TouchableOpacity style={styles.listItem} onPress={() => onDeletePress(guest)}>
+                                                <FontAwesomeIcon icon={ faTrash } size={ 25 } color="#f00" />
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={styles.listItemView}>
                                             <CheckBox
                                                 disabled={false}
+                                                style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }], margin: 10 }}
                                                 value={guest.confirmed}
                                                 onValueChange={(newValue) => {
                                                     guestsRef
@@ -124,8 +148,13 @@ export default function ManageGuestsScreen({route, navigation }) {
                                                         });
                                                 }}
                                             />
+                                            <Text style={styles.secondaryText}>CONFERMATO</Text>
+                                        </View>
+                                        <View style={styles.listItemView}>
                                             <CheckBox
                                                 disabled={false}
+                                                style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }], margin: 10 }}
+                                                className="checkbox"
                                                 value={guest.payed}
                                                 onValueChange={(newValue) => {
                                                     guestsRef
@@ -138,13 +167,10 @@ export default function ManageGuestsScreen({route, navigation }) {
                                                         });
                                                 }}
                                             />
-                                            <TouchableOpacity
-                                                style={styles.listItemButton}
-                                                onPress={() => onDeletePress(guest)}
-                                            >
-                                                <Text style={styles.listItemButtonText}>Elimina</Text>
-                                            </TouchableOpacity>
+                                            <Text style={styles.secondaryText}>PAGATO</Text>
                                         </View>
+                                        <View style={styles.hr}></View>
+
                                     </View>
                                 );
                             }

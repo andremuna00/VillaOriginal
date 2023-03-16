@@ -5,15 +5,14 @@ import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { ImageBackground } from 'react-native';
 
-
-//page for adding a new person is no one is passed to route to the database to table persone: name, surname, birthday year, phone, city, instagram link, notes, creator_id
+//page for adding a new person is no one is passed to route to the database to table persone: name, surname, birthday year, phone, sex, instagram link, notes, creator_id
 export default function EditPeopleScreen({route, navigation }) {
     const person = route.params? route.params.person:null;
     const [name, setName] = useState(person ? person.name : '');
     const [surname, setSurname] = useState(person ? person.surname : '');
     const [birthday, setBirthday] = useState(person ? person.birthday : '');
     const [phone, setPhone] = useState(person ? person.phone : '');
-    const [city, setCity] = useState(person ? person.city : '');
+    const [sex, setSex] = useState(person ? person.sex : '');
     const [instagram, setInstagram] = useState(person ? person.instagram : '');
     const [notes, setNotes] = useState(person ? person.notes : '');
     const [error, setError] = useState(null);
@@ -30,16 +29,17 @@ export default function EditPeopleScreen({route, navigation }) {
                 surname: surname,
                 birthday: birthday,
                 phone: phone,
-                city: city,
+                sex: sex,
                 instagram: instagram,
                 notes: notes,
                 creator_id: person.creator_id
             })
             .then(() => {
                 setLoading(false);
-                navigation.navigate('ListPeople');
+                navigation.goBack();
             })
             .catch(error => {
+                console.error(error);
                 setLoading(false);
                 setError(error.message);
             })
@@ -55,7 +55,7 @@ export default function EditPeopleScreen({route, navigation }) {
                 surname: surname,
                 birthday: birthday,
                 phone: phone,
-                city: city,
+                sex: sex,
                 instagram: instagram,
                 notes: notes,
                 creator_id: firebase.auth().currentUser.uid
@@ -106,10 +106,21 @@ export default function EditPeopleScreen({route, navigation }) {
                 </View>
 
                 <View>
+                    <Text style={styles.inputTitle}>Sesso</Text>
+                    <TextInput
+                        style={styles.input}
+                        autoCapitalize="none"
+                        onChangeText={sex => setSex(sex)}
+                        value={sex}
+                    ></TextInput>
+                </View>
+
+                <View>
                     <Text style={styles.inputTitle}>Cellulare</Text>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
+                        keyboardType='numeric'
                         onChangeText={phone => setPhone(phone)}
                         value={phone}
                     ></TextInput>
@@ -119,6 +130,7 @@ export default function EditPeopleScreen({route, navigation }) {
                     <Text style={styles.inputTitle}>Instagram</Text>
                     <TextInput
                         style={styles.input}
+                        keyboardType='url'
                         autoCapitalize="none"
                         onChangeText={instagram => setInstagram(instagram)}
                         value={instagram}
