@@ -16,3 +16,4 @@ export {default as ShoppingListScreen} from './ShoppingListScreen';
 export {default as AddGuestsScreen} from './AddGuestsScreen';
 export {default as AddShoppingItemScreen} from './AddShoppingItemScreen';
 export {default as ManageScreen} from './ManageScreen';
+export {default as Analytics} from './Analytics';

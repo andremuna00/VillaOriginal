@@ -4,6 +4,8 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-nativ
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { ImageBackground } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPlus, faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 
 
 //display list of all people to database showing name, surname, birthday year, instagram link, edit button, delete button
@@ -84,11 +86,11 @@ export default function AddShoppingItemScreen({route, navigation }){
                     return (
                         (item.name.toLowerCase().includes(search.toLowerCase())||item.surname.toLowerCase().includes(search.toLowerCase())) &&
                         <View style={styles.listItemView} key={item.id}>
-                            <Text style={styles.listItemTitle}>{item.name} - {item.price}€</Text>
+                            <Text style={styles.secondaryText}>{item.name} - {item.price}€</Text>
                             <TouchableOpacity
-                                style={styles.button}
+                                style={{backgroundColor: "#000000", borderRadius: 20, padding: 10, margin : 10}}
                                 onPress={() => onAddPress(item)}>
-                                <Text style={styles.buttonTitle}>Aggiungi</Text>
+                                <FontAwesomeIcon icon={ faPlus } size={ 20 } color="#ffffff" />
                             </TouchableOpacity>
 
                         </View>
@@ -100,7 +102,8 @@ export default function AddShoppingItemScreen({route, navigation }){
                 style={styles.button}
                 onPress={() => navigation.navigate('EditItemsShopping', {item: null, onAddPress: onAddPress, goBack: "AddShoppingItem"})}
             >
-                <Text style={styles.buttonTitle}>Aggiungi nuovo prodotto</Text>
+                <Text style={styles.buttonTitle}>Crea nuovo prodotto</Text>
+                <FontAwesomeIcon style={{marginLeft: 10}} icon={faShoppingBasket} size={20} color="#ffffff" />
             </TouchableOpacity>
             </ImageBackground>
         </View>

@@ -4,7 +4,7 @@ import CheckBox from 'expo-checkbox'
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ImageBackground } from 'react-native';
 
 //before list button to add guest and select from list of people (with search bar)
@@ -22,7 +22,7 @@ export default function ManageShoppingListScreen({route, navigation }) {
         const shoppingList = [];
         const promises = [];
         querySnapshot.forEach((doc) => {
-            const { item_id, bought, party_id } = doc.data();
+            const { item_id, bought, party_id, quantity } = doc.data();
                 promises.push(
                     firebase.firestore().collection('items').doc(item_id).get().then((doc_per) => {
                         const { name,price,notes,creator_id,mark } = doc_per.data();
@@ -35,6 +35,7 @@ export default function ManageShoppingListScreen({route, navigation }) {
                             mark,
                             bought,
                             party_id,
+                            quantity,
                             item_id
                         });
                     }
@@ -65,6 +66,32 @@ export default function ManageShoppingListScreen({route, navigation }) {
     function onEditPress(listItem) {
         navigation.navigate('EditItemsShopping', { items: listItem });
     }
+
+    function AddOneQuantity(listItem) {
+        shoppingListRef
+            .doc(listItem.id)
+            .update({
+                quantity: listItem.quantity + 1
+            })
+            .catch((error) => {
+                alert(error);
+            });
+    }
+
+    function RemoveOneQuantity(listItem) {
+        if (listItem.quantity > 1) {
+            shoppingListRef
+
+                .doc(listItem.id)
+                .update({
+                    quantity: listItem.quantity - 1
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+        }
+    }
+
 
     return(
         <View style={styles.container}>
@@ -106,15 +133,22 @@ export default function ManageShoppingListScreen({route, navigation }) {
                                                 item.id = listItem.item_id;
                                                 onEditPress(item)
                                             }}>
-                                            <FontAwesomeIcon icon={ faEdit } size={ 25 } color="#fff" />
+                                            <FontAwesomeIcon icon={ faEdit } size={ 20 } color="#fff" />
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.listItem} onPress={() => onDeletePress(listItem)}>
-                                            <FontAwesomeIcon icon={ faTrash } size={ 25 } color="#f00" />
+                                            <FontAwesomeIcon icon={ faTrash } size={ 20 } color="#b20c" />
                                         </TouchableOpacity>
                                     </View>
                                     <View style={styles.listItemView}>
                                         <Text style={styles.listItem}>{listItem.price}€</Text>
-                                        <Text style={styles.listItem}>{listItem.mark}</Text>  
+                                        <Text style={styles.listItem}>{listItem.mark}</Text>
+                                        <TouchableOpacity style={styles.listItemButton} onPress={()=>RemoveOneQuantity(listItem)}>
+                                            <FontAwesomeIcon icon={ faMinus } size={ 20 } color="#fff" />
+                                        </TouchableOpacity>  
+                                        <Text style={styles.listItem}>{listItem.quantity}</Text>
+                                        <TouchableOpacity style={styles.listItemButton} onPress={()=>AddOneQuantity(listItem)}>
+                                        <FontAwesomeIcon icon={ faPlus } size={ 20 } color="#fff" />
+                                        </TouchableOpacity>  
                                     </View>    
                                 </View>
                             )

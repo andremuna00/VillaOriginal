@@ -54,7 +54,7 @@ export default function ManageScreen({route, navigation }) {
     return (
         <View style={styles.container}>
             <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
-            <Text style={styles.title}>{`Manage Roles`}</Text>
+            <Text style={styles.title}>{`Gestisci ruoli`}</Text>
             <FlatList
                 data={users}
                 renderItem={({ item }) => (

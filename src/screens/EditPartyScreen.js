@@ -4,8 +4,9 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { ImageBackground } from 'react-native';
-
-
+import { ScrollView } from 'react-native-gesture-handler';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
 //page for adding a new party is no one is passed to route to the database to table persone: name, date, notes
 export default function EditPartyScreen({route, navigation }) {
     const party = route.params? route.params.party:null;
@@ -71,7 +72,7 @@ export default function EditPartyScreen({route, navigation }) {
             <View style={styles.errorMessage}>
                 {error ? <Text style={styles.error}>{error}</Text> : null}
             </View>
-
+            <ScrollView>
             <View style={styles.form}>
                 <View>
                     <Text style={styles.inputTitle}>Nome</Text>
@@ -92,6 +93,7 @@ export default function EditPartyScreen({route, navigation }) {
 
             <TouchableOpacity style={styles.button} onPress={party ? onEditPress : onAddPress}>
                 <Text style={{ color: "#FFF", fontWeight: "500" }}>{party ? "Salva" : "Aggiungi"}</Text>
+                <FontAwesomeIcon icon={faSave} size={20} color="#FFF" style={{ marginLeft: 10 }} />
             </TouchableOpacity>
 
             <TouchableOpacity style={{ alignSelf: "center", marginTop: 32 }} onPress={() => navigation.goBack()}>
@@ -99,6 +101,7 @@ export default function EditPartyScreen({route, navigation }) {
                     {"< Torna indietro"}
                 </Text>
             </TouchableOpacity>
+            </ScrollView>
             </ImageBackground>
         </View>
     )

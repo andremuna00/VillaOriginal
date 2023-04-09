@@ -4,7 +4,9 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { ImageBackground } from 'react-native';
-
+import { ScrollView } from 'react-native-gesture-handler';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
 //page for adding a new person is no one is passed to route to the database to table persone: name, surname, birthday year, phone, sex, instagram link, notes, creator_id
 export default function EditPeopleScreen({route, navigation }) {
     const person = route.params? route.params.person:null;
@@ -74,7 +76,8 @@ export default function EditPeopleScreen({route, navigation }) {
         <View style={styles.container}>
         <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
         <Text style={styles.editTitle}>{person ? "Modifica dati persona" : "Aggiungi nuova persona"}</Text>
-            <View>
+            <ScrollView>
+            <View style={styles.form}>
                 <View>
                     <Text style={styles.inputTitle}>Nome</Text>
                     <TextInput
@@ -96,10 +99,11 @@ export default function EditPeopleScreen({route, navigation }) {
                 </View>
 
                 <View>
-                    <Text style={styles.inputTitle}>Data di Nascita</Text>
+                    <Text style={styles.inputTitle}>Anno di Nascita</Text>
                     <TextInput
                         style={styles.input}
                         autoCapitalize="none"
+                        keyboardType='numeric'
                         onChangeText={birthday => setBirthday(birthday)}
                         value={birthday}
                     ></TextInput>
@@ -114,7 +118,7 @@ export default function EditPeopleScreen({route, navigation }) {
                         value={sex}
                     ></TextInput>
                 </View>
-
+{/*
                 <View>
                     <Text style={styles.inputTitle}>Cellulare</Text>
                     <TextInput
@@ -146,11 +150,12 @@ export default function EditPeopleScreen({route, navigation }) {
                         value={notes}
                     ></TextInput>
                 </View>
-
+                */ }
             </View>
 
             <TouchableOpacity style={styles.button} onPress={person ? onEditPress : onAddPress}>
                 <Text style={{ color: "#FFF", fontWeight: "500" }}>{person ? "Salva" : "Aggiungi"}</Text>
+                <FontAwesomeIcon icon={faSave} size={20} color="#FFF" style={{ marginLeft: 10 }} />
             </TouchableOpacity>
 
             <TouchableOpacity style={{ alignSelf: "center", marginTop: 32 }} onPress={() => navigation.goBack()}>
@@ -158,6 +163,7 @@ export default function EditPeopleScreen({route, navigation }) {
                     {"< Torna indietro"}
                 </Text>
             </TouchableOpacity>
+            </ScrollView>
             </ImageBackground>
         </View>
     )

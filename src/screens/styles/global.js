@@ -34,7 +34,7 @@ export default StyleSheet.create({
     },
     secondaryText:{
         color: '#FFF',
-        fontSize: 12,
+        fontSize: 15,
         fontStyle: 'italic',
 
     },
@@ -76,11 +76,12 @@ export default StyleSheet.create({
 
     },
     button: {
-        backgroundColor: '#E9446A',
+        backgroundColor: '#000000',
         opacity: 0.6,
         borderRadius: 5,
         height: 52,
         margin:30,
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         padding:10
@@ -109,6 +110,7 @@ export default StyleSheet.create({
     verticalWrapper: {
         flex: 1,
         flexDirection: 'column',
+        marginTop:70,
     },
     horizontalWrapper: {
         flex: 1,
@@ -123,7 +125,7 @@ export default StyleSheet.create({
     listItemContainer: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         padding: 10,
         margin: 2,
         borderBottomWidth: 1,
@@ -173,7 +175,8 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     listItemButton: {
-        backgroundColor: '#E9446A',
+        backgroundColor: '#000000',
+        opacity: 0.6,
         borderRadius: 5,
         height: 52,
         margin:10,
@@ -192,7 +195,6 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         borderRadius: 4,
         alignItems: 'center',
-        justifyContent: 'center',
     },
     listContainer: {
         flex: 1,

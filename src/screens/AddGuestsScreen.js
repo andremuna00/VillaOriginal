@@ -5,7 +5,7 @@ import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { ImageBackground } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPersonCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 //display list of all people to database showing name, surname, birthday year, instagram link, edit button, delete button
 export default function AddGuestScreen({route, navigation }){
@@ -102,7 +102,7 @@ export default function AddGuestScreen({route, navigation }){
                             <View style={styles.listItemView}>
                                 <Text style={styles.secondaryText}>{person.name} {person.surname}</Text>
                                 <TouchableOpacity
-                                    style={{backgroundColor: "#E9446A", borderRadius: 20, padding: 10, margin : 10}}
+                                    style={{backgroundColor: "#000000", borderRadius: 20, padding: 10, margin : 10}}
                                     onPress={() => onAddPress(person)}>
                                     <FontAwesomeIcon icon={ faPlus } size={ 20 } color="#ffffff" />
                                 </TouchableOpacity>
@@ -118,7 +118,8 @@ export default function AddGuestScreen({route, navigation }){
                     style={styles.button}
                     onPress={() => navigation.navigate('EditPeople', {person: null, onAddPress: onAddPress, goBack: "AddGuests"})}
                 >
-                    <Text style={styles.buttonTitle}>Aggiungi nuova persona</Text>
+                    <Text style={styles.buttonTitle}>Crea un nuovo utente</Text>
+                    <FontAwesomeIcon style={{marginLeft: 10}} icon={ faPersonCirclePlus } size={ 20 } color="#ffffff" />
                 </TouchableOpacity>
             </ImageBackground>
         </View>

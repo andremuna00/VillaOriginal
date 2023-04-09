@@ -5,7 +5,7 @@ import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { ImageBackground } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faPersonBooth } from '@fortawesome/free-solid-svg-icons';
 import {faInstagram} from '@fortawesome/free-brands-svg-icons';
 
 //before list button to add guest and select from list of people (with search bar)
@@ -121,15 +121,15 @@ export default function ManageGuestsScreen({route, navigation }) {
                                             <Text style={styles.listItemTitle}>{guest.name} {guest.surname}</Text>
 
                                             {guest.instagram!=null && guest.instagram!="" &&<TouchableOpacity onPress={()=> handlePress(guest.instagram)} style={styles.listItem} >
-                                                <FontAwesomeIcon icon={ faInstagram } size={ 25 } color="#fff" />
+                                                <FontAwesomeIcon icon={ faInstagram } size={ 20 } color="#fff" />
                                             </TouchableOpacity>}
-                                            <TouchableOpacity style={styles.listItem} onPress={() =>{
+                                            {/*<TouchableOpacity style={styles.listItem} onPress={() =>{
                                                 guest.id = guest.person_id;
                                                 onEditPress(guest)}}>
-                                                <FontAwesomeIcon icon={ faEdit } size={ 25 } color="#fff" />
-                                            </TouchableOpacity>
+                                                <FontAwesomeIcon icon={ faEdit } size={ 20 } color="#fff" />
+                                            </TouchableOpacity>*/}
                                             <TouchableOpacity style={styles.listItem} onPress={() => onDeletePress(guest)}>
-                                                <FontAwesomeIcon icon={ faTrash } size={ 25 } color="#f00" />
+                                                <FontAwesomeIcon icon={ faTrash } size={ 20 } color="#b20c" />
                                             </TouchableOpacity>
                                         </View>
                                         <View style={styles.listItemView}>
@@ -184,6 +184,7 @@ export default function ManageGuestsScreen({route, navigation }) {
                 onPress={() => navigation.navigate('AddGuests', {party: party, guests: guests})}
             >
                 <Text style={styles.buttonTitle}>Aggiungi invitato</Text>
+                <FontAwesomeIcon style={{marginLeft: 10}} icon={faPersonBooth} size={20} color="#ffffff" />
             </TouchableOpacity>
             </ImageBackground>
         </View>

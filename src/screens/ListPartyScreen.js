@@ -118,10 +118,10 @@ export default function ListPartyScreen({route, navigation }){
                                 <View style={styles.listItemView}>
                                     <Text style={styles.listItemTitle}>{party.name}</Text>
                                     <TouchableOpacity style={styles.listItem} onPress={() => onEditPress(party)}>
-                                        <FontAwesomeIcon icon={ faEdit } size={ 25 } color="#fff" />
+                                        <FontAwesomeIcon icon={ faEdit } size={ 20 } color="#fff" />
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.listItem} onPress={() => showConfirmDialog("Sicuro di voler cancellare la festa?", party)}>
-                                        <FontAwesomeIcon icon={ faTrash } size={ 25 } color="#f00" />
+                                        <FontAwesomeIcon icon={ faTrash } size={ 20 } color="#b20c" />
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.listItemView}>

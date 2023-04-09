@@ -108,10 +108,10 @@ export default function ListPeopleScreen({route, navigation }){
                                 <View style={styles.listItemView}>
                                     <Text style={styles.listItemTitle}>{person.name} {person.surname}</Text>
                                     <TouchableOpacity style={styles.listItem} onPress={() => onEditPress(person)}>
-                                        <FontAwesomeIcon icon={ faEdit } size={ 25 } color="#fff" />
+                                        <FontAwesomeIcon icon={ faEdit } size={ 20 } color="#fff" />
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.listItem} onPress={() => showConfirmDialog("Sei sicuro di voler cancellare questa persona?", person)}>
-                                        <FontAwesomeIcon icon={ faTrash } size={ 25 } color="#f00" />
+                                        <FontAwesomeIcon icon={ faTrash } size={ 20 } color="#b20c" />
                                     </TouchableOpacity>
                                 </View>
 
