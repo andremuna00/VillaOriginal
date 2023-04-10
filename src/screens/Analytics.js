@@ -15,22 +15,33 @@ export default function Analytics({route, navigation }){
     //get all people from database
     const [party, setParty] = useState(route.params.party);
 
-    //compute total price
     const [totalPrice, setTotalPrice] = useState(0);
-    //compute total incoming from people
     const [totalIncoming, setTotalIncoming] = useState(0);
-    //compute number of sex
+    const [expectedIncoming, setExpectedIncoming] = useState(0);
     const [sexes, setSexes] = useState([1,1]);
-    //compute list of years
     const [years, setYears] = useState([]);
     const [uniqueYears, setUniqueYears] = useState([]);
+    const [NGuests, setNGuests] = useState(0);
+    const [NConfirmed, setNConfirmed] = useState(0);
+    const [NPayed, setNPayed] = useState(0);
 
     useEffect(() => {
         //get list of confirmed people
         const peopleRef = firebase.firestore().collection('guests').where("party_id", "==", party.id).where("confirmed", "==", true);
         let income = 0;
+        let exp = 0;
         let sexs=[];
         let ys = [];
+        firebase.firestore().collection('guests').where("party_id", "==", party.id).get().then((querySnapshot) => {
+            setNGuests(querySnapshot.size);
+        });
+        firebase.firestore().collection('guests').where("party_id", "==", party.id).where("confirmed", "==", true).get().then((querySnapshot) => {
+            setNConfirmed(querySnapshot.size);
+        });
+        firebase.firestore().collection('guests').where("party_id", "==", party.id).where("payed", "==", true).get().then((querySnapshot) => {
+            setNPayed(querySnapshot.size);
+        });
+        //count incoming and expected incoming. Save people in array
         const promisespeople = [];
         peopleRef.get().then((querySnapshot) => {
             const people = [];
@@ -43,17 +54,19 @@ export default function Analytics({route, navigation }){
                 if(doc.data().payed){
                     income = income + parseInt(party.price);
                 }
+                exp = exp + parseInt(party.price);
+
             });
+            //save all sexs and yeats
             Promise.all(promisespeople).then(() => {
                 people.forEach((doc) => {
                 sexs.push(doc.sex)
                 ys.push(doc.birthday)
                 });
                 
-            
+            //count male and female
             var male = 0;
             var female = 0;
-            //count male
             for(var i=0; i<sexs.length; i++){
 
                 if(sexs[i] == "M")
@@ -62,7 +75,6 @@ export default function Analytics({route, navigation }){
                     female+=1;
             }
             sexs = [male, female];
-            console.log(ys);
             //count years
             //find all different years
             var uniqueYears = [];
@@ -85,14 +97,17 @@ export default function Analytics({route, navigation }){
             }
             ys = count;
 
+
             setSexes(sexs);
             setYears(ys);
             setTotalIncoming(income);
+            setExpectedIncoming(exp);
         });
         });
+
+        //compute total price from shopping list
         let price = 0;
         const promises = [];
-        //compute number of shopping items in the list
         const shoppingRef = firebase.firestore().collection('shopping_list').where("party_id", "==", party.id);
         shoppingRef.get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -117,14 +132,21 @@ export default function Analytics({route, navigation }){
     return(
         <View style={styles.container}>
         <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
+            <ScrollView>
             <Text style={styles.title}>Analytics</Text>
-            <Text style={styles.text}>Total price: {totalPrice}€</Text>
-            <Text style={styles.text}>Total incoming: {totalIncoming}€</Text>
-            <Text style={styles.text}>Number of male: {sexes[0]}</Text>
-            <Text style={styles.text}>Number of female: {sexes[1]}</Text>
+            <Text style={{color: "white"}}>Spesa Totale: {totalPrice}€</Text>
+            <Text style={{color: "white"}}>Numero totale di invitati: {NGuests}</Text>
+            <Text style={{color: "white"}}>Numero totale di confermati: {NConfirmed}</Text>
+            <Text style={{color: "white"}}>Numero totale di paganti: {NPayed}</Text>
+            <Text style={{color: "white"}}>Spesa personale: DA FARE</Text>
+            <Text style={{color: "white"}}>Entrate effettive (solo persone che hanno pagato): {totalIncoming}€</Text>
+            <Text style={{color: "white"}}>Entrate previste (solo confermati): {expectedIncoming}€</Text>
+            <Text style={{color: "white"}}>Numero di maschi (solo confermati): {sexes[0]}</Text>
+            <Text style={{color: "white"}}>Numero di femmine (solo confermati): {sexes[1]}</Text>
             {years.map((year, index) => (
-                <Text key={index} style={styles.text}>Number of people born in {uniqueYears[index]}: {year}</Text>
+                <Text key={index} style={{color: "white"}}>Numero di persone nate nel {uniqueYears[index]}: {year}</Text>
             ))}
+            </ScrollView>
 
 
         </ImageBackground>

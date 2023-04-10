@@ -77,13 +77,13 @@ export default function EditItemsShoppingScreen({route, navigation }) {
                     <View style={styles.form}>
                         <View>
                             <Text style={styles.inputTitle}>Nome</Text>
-                            <TextInput style={styles.input} autoCapitalize="none" onChangeText={name => setName(name)} value={name}></TextInput>
+                            <TextInput style={styles.input} autoCapitalize="sentences" onChangeText={name => setName(name)} value={name}></TextInput>
 
                             <Text style={styles.inputTitle}>Prezzo</Text>
-                            <TextInput style={styles.input} keyboardType="numeric" autoCapitalize="none" onChangeText={price => setPrice(price)} value={price}></TextInput>
+                            <TextInput style={styles.input} keyboardType="numeric" autoCapitalize="sentences" onChangeText={price => setPrice(price)} value={price}></TextInput>
 
                             <Text style={styles.inputTitle}>Marca/Negozio</Text>
-                            <TextInput style={styles.input} autoCapitalize="none" onChangeText={mark => setMark(mark)} value={mark}></TextInput>
+                            <TextInput style={styles.input} autoCapitalize="sentences" onChangeText={mark => setMark(mark)} value={mark}></TextInput>
                         </View>
                     </View>
                     

@@ -37,7 +37,7 @@ export default function RegisterScreen({route, navigation }) {
         return (
             <View style={styles.container}>
             <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
-                <Text style={styles.greeting}>{`Hello again. \nWelcome back.`}</Text>
+                <Text style={styles.title}>{`Registrazione`}</Text>
     
                 <View style={styles.errorMessage}>
                     {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -50,6 +50,7 @@ export default function RegisterScreen({route, navigation }) {
                         <TextInput
                             style={styles.input}
                             autoCapitalize="none"
+                            keyboardType='email-address'
                             onChangeText={email => setEmail(email)}
                             value={email}
                         ></TextInput>
@@ -68,15 +69,15 @@ export default function RegisterScreen({route, navigation }) {
                 </View>
     
                 <TouchableOpacity style={styles.button} onPress={onRegisterPress}>
-                    <Text style={{ color: "#FFF", fontWeight: "500" }}>Sign up</Text>
+                    <Text style={{ color: "#FFF", fontWeight: "500" }}>Registrati</Text>
                 </TouchableOpacity>
     
                 <TouchableOpacity
                     style={{ alignSelf: "center", marginTop: 32 }}
                     onPress={() => navigation.navigate('Login')}
                 >
-                    <Text style={{ color: "#414959", fontSize: 13 }}>
-                        New to SocialApp? <Text style={{ fontWeight: "500", color: "#E9446A" }}>Login</Text>
+                    <Text style={{ color: "#414959", fontSize: 20 }}>
+                        <Text style={{ fontWeight: "500", color: "#FFF" }}>Login</Text>
                     </Text>
                 </TouchableOpacity>
                 </ImageBackground>

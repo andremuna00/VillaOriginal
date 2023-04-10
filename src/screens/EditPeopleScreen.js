@@ -64,7 +64,7 @@ export default function EditPeopleScreen({route, navigation }) {
             })
             .then(() => {
                 setLoading(false);
-                navigation.navigate('People');
+                navigation.goBack();
             })
             .catch(error => {
                 setLoading(false);
@@ -82,7 +82,7 @@ export default function EditPeopleScreen({route, navigation }) {
                     <Text style={styles.inputTitle}>Nome</Text>
                     <TextInput
                         style={styles.input}
-                        autoCapitalize="none"
+                        autoCapitalize="sentences"
                         onChangeText={name => setName(name)}
                         value={name}
                     ></TextInput>
@@ -92,7 +92,7 @@ export default function EditPeopleScreen({route, navigation }) {
                     <Text style={styles.inputTitle}>Cognome</Text>
                     <TextInput
                         style={styles.input}
-                        autoCapitalize="none"
+                        autoCapitalize="sentences"
                         onChangeText={surname => setSurname(surname)}
                         value={surname}
                     ></TextInput>
@@ -102,7 +102,7 @@ export default function EditPeopleScreen({route, navigation }) {
                     <Text style={styles.inputTitle}>Anno di Nascita</Text>
                     <TextInput
                         style={styles.input}
-                        autoCapitalize="none"
+                        autoCapitalize="sentences"
                         keyboardType='numeric'
                         onChangeText={birthday => setBirthday(birthday)}
                         value={birthday}
@@ -113,7 +113,7 @@ export default function EditPeopleScreen({route, navigation }) {
                     <Text style={styles.inputTitle}>Sesso</Text>
                     <TextInput
                         style={styles.input}
-                        autoCapitalize="none"
+                        autoCapitalize="sentences"
                         onChangeText={sex => setSex(sex)}
                         value={sex}
                     ></TextInput>
@@ -123,7 +123,7 @@ export default function EditPeopleScreen({route, navigation }) {
                     <Text style={styles.inputTitle}>Cellulare</Text>
                     <TextInput
                         style={styles.input}
-                        autoCapitalize="none"
+                        autoCapitalize="sentences"
                         keyboardType='numeric'
                         onChangeText={phone => setPhone(phone)}
                         value={phone}
@@ -135,7 +135,7 @@ export default function EditPeopleScreen({route, navigation }) {
                     <TextInput
                         style={styles.input}
                         keyboardType='url'
-                        autoCapitalize="none"
+                        autoCapitalize="sentences"
                         onChangeText={instagram => setInstagram(instagram)}
                         value={instagram}
                     ></TextInput>
@@ -145,7 +145,7 @@ export default function EditPeopleScreen({route, navigation }) {
                     <Text style={styles.inputTitle}>Note</Text>
                     <TextInput
                         style={styles.input}
-                        autoCapitalize="none"
+                        autoCapitalize="sentences"
                         onChangeText={notes => setNotes(notes)}
                         value={notes}
                     ></TextInput>

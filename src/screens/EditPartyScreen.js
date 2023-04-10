@@ -34,7 +34,7 @@ export default function EditPartyScreen({route, navigation }) {
             })
             .then(() => {
                 setLoading(false);
-                navigation.navigate('ListParty');
+                navigation.goBack();
             })
             .catch(error => {
                 setLoading(false);
@@ -56,7 +56,7 @@ export default function EditPartyScreen({route, navigation }) {
             })
             .then(() => {
                 setLoading(false);
-                navigation.navigate('Party');
+                navigation.goBack();
             })
             .catch(error => {
                 setLoading(false);
@@ -76,16 +76,16 @@ export default function EditPartyScreen({route, navigation }) {
             <View style={styles.form}>
                 <View>
                     <Text style={styles.inputTitle}>Nome</Text>
-                    <TextInput style={styles.input} autoCapitalize="none" onChangeText={name => setName(name)} value={name}></TextInput>
+                    <TextInput style={styles.input} autoCapitalize="sentences" onChangeText={name => setName(name)} value={name}></TextInput>
 
                     <Text style={styles.inputTitle}>Data</Text>
-                    <TextInput style={styles.input} autoCapitalize="none" onChangeText={date => setDate(date)} value={date}></TextInput>
+                    <TextInput style={styles.input} autoCapitalize="sentences" onChangeText={date => setDate(date)} value={date}></TextInput>
 
                     <Text style={styles.inputTitle}>Prezzo</Text>
                     <TextInput style={styles.input} autoCapitalize="none" keyboardType="numeric" onChangeText={price => setPrice(price)} value={price}></TextInput>
 
                     <Text style={styles.inputTitle}>Note</Text>
-                    <TextInput style={styles.input} autoCapitalize="none" onChangeText={notes => setNotes(notes)} value={notes}></TextInput>
+                    <TextInput style={styles.input} autoCapitalize="sentences" onChangeText={notes => setNotes(notes)} value={notes}></TextInput>
 
                 </View>
 

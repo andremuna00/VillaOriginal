@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView,Alert } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -100,7 +100,7 @@ export default function ListPeopleScreen({route, navigation }){
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
-                <ScrollView>
+                <ScrollView style={{marginBottom:50, marginTop: 20}}>
                     {people.map((person, index) => {
                         return (
                             (person.name.toLowerCase().includes(search.toLowerCase())||person.surname.toLowerCase().includes(search.toLowerCase())) &&

@@ -39,24 +39,28 @@ export default function ManageGuestsScreen({route, navigation }) {
             const { person_id, payed, confirmed, arrived, party_id } = doc.data();
                 promises.push(
                     firebase.firestore().collection('people').doc(person_id).get().then((doc_per) => {
-                        const { name,surname,birthday,phone,sex,instagram,notes,creator_id } = doc_per.data();
-                        guests.push({
-                            id: doc.id,
-                            name,
-                            surname,
-                            birthday,
-                            phone,
-                            sex,
-                            instagram,
-                            notes,
-                            creator_id,
-                            payed,
-                            confirmed,
-                            party_id,
-                            arrived,
-                            person_id
-                        });
-                    })
+                        if(doc_per.exists)
+                        {
+                            const { name,surname,birthday,phone,sex,instagram,notes,creator_id } = doc_per.data();
+                            guests.push({
+                                id: doc.id,
+                                name,
+                                surname,
+                                birthday,
+                                phone,
+                                sex,
+                                instagram,
+                                notes,
+                                creator_id,
+                                payed,
+                                confirmed,
+                                party_id,
+                                arrived,
+                                person_id
+                            });
+                    }
+                })
+                    
                 );
         });
         Promise.all(promises).then(() => {

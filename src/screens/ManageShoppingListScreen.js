@@ -4,7 +4,7 @@ import CheckBox from 'expo-checkbox'
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTrash, faEdit, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faMinus, faPlus, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { ImageBackground } from 'react-native';
 
 //before list button to add guest and select from list of people (with search bar)
@@ -158,6 +158,7 @@ export default function ManageShoppingListScreen({route, navigation }) {
             </ScrollView>
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AddShoppingItem', { party: party, shoppingList: shoppingList })}>
                     <Text style={styles.buttonTitle}>Aggiungi prodotto</Text>
+                    <FontAwesomeIcon style={{marginLeft: 10}} icon={ faShoppingCart } size={ 20 } color="#fff" />
                 </TouchableOpacity>
             </ImageBackground>
         </View>

@@ -24,6 +24,8 @@ export default function ListGuestsScreen({route, navigation }) {
             const { person_id, payed, confirmed, arrived, party_id } = doc.data();
                 promises.push(
                     firebase.firestore().collection('people').doc(person_id).get().then((doc_per) => {
+                        if(doc_per.exists)
+                        {
                         const { name,surname,birthday,phone,sex,instagram,notes,creator_id } = doc_per.data();
                         guests.push({
                             id: doc.id,
@@ -41,7 +43,7 @@ export default function ListGuestsScreen({route, navigation }) {
                             arrived,
                             person_id
                         });
-                    })
+                    }})
                 );
         });
         Promise.all(promises).then(() => {

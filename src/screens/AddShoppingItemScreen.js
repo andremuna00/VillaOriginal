@@ -52,7 +52,7 @@ export default function AddShoppingItemScreen({route, navigation }){
                 party_id: route.params.party.id
             }
         ).then((docRef) => {
-            navigation.goBack();
+            setItems(items.filter((i) => i.id !== item.id));
         }
         ).catch((error) => {
             alert(error);

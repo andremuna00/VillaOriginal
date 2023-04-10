@@ -57,7 +57,7 @@ export default function LoginScreen({route, navigation }) {
     return (
         <View style={styles.container}>
         <ImageBackground source={require('../imgs/background.png')} resizeMode="cover" style={styles.image}>
-            <Text style={styles.greeting}>{`Ciao. \nBentornato.`}</Text>
+            <Text style={styles.title}>{`Login`}</Text>
 
             <View style={styles.errorMessage}>
                 {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -71,6 +71,7 @@ export default function LoginScreen({route, navigation }) {
                         style={styles.input}
                         autoCapitalize="none"
                         onChangeText={email => setEmail(email)}
+                        keyboardType='email-address'
                         value={email}
                     ></TextInput>
                 </View>
@@ -95,8 +96,8 @@ export default function LoginScreen({route, navigation }) {
                 style={{ alignSelf: "center", marginTop: 32 }}
                 onPress={() => navigation.navigate("Register")}
             >
-                <Text style={{ color: "#414959", fontSize: 13 }}>
-                    New to SocialApp? <Text style={{ fontWeight: "500", color: "#E9446A" }}>Registrati</Text>
+                <Text style={{ color: "#414959", fontSize: 20 }}>
+                    <Text style={{ fontWeight: "500",fontSize:20, color: "#FFF" }}>Registrati</Text>
                 </Text>
             </TouchableOpacity>
             </ImageBackground>
