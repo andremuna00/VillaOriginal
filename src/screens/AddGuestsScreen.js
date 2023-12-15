@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { ImageBackground } from 'react-native';
@@ -68,9 +68,33 @@ export default function AddGuestScreen({route, navigation }){
                 //navigation.navigate('ListGuests', {party: route.params.party});
             }
         });
-
-        
     }
+
+    const InsertPerson = (userName) => {
+        //insert person in database
+        firebase
+            .firestore()
+            .collection('people')
+            .add({
+                name: userName.split(" ")[0],
+                surname: userName.split(" ")[1],
+                birthday: null,
+                phone: null,
+                sex: null,
+                instagram: null,
+                notes: null,
+                creator_id: firebase.auth().currentUser.uid
+            })
+            .then((person) => {
+                onAddPress({id: person.id, name: userName.split(" ")[0], surname: userName.split(" ")[1]});
+                setSearch('');
+            })
+            .catch(error => {
+                setLoading(false);
+                setError(error.message);
+            })
+        }
+
 
     return(
         <View style={styles.container}>
@@ -86,10 +110,27 @@ export default function AddGuestScreen({route, navigation }){
                     autoCapitalize="none"
                 />
                 <ScrollView>
+                {loading ? (
+                        <ActivityIndicator size="large" color="#9e9e9e" />
+                    ) :(<>
                     {
-                        people.length == 0 && !loading && people.filter((person) => person.name.toLowerCase().includes(search.toLowerCase())||person.surname.toLowerCase().includes(search.toLowerCase())).length == 0 && (
+                        (!loading && route.params.guests.filter(guest => (guest.name.toLowerCase() == search.split(" ")[0].toLowerCase()) && (search.includes(" ") && guest.surname.toLowerCase() == search.split(" ")[1].toLowerCase())).length!=0) && (
+                            <View style={styles.listItemContainer}>
+                                <Text style={styles.listItem}>Esiste già una persona in lista con questo nome/cognome</Text>
+                            </View>
+                        )
+                    }
+                    {
+                        (people.length == 0 && !loading) || people.filter((person) => person.name.toLowerCase().includes(search.toLowerCase())||person.surname.toLowerCase().includes(search.toLowerCase())).length == 0 && (
                             <View style={styles.listItemContainer}>
                                 <Text style={styles.listItem}>No persone trovate</Text>
+                                <TouchableOpacity
+                                    style={styles.button}
+                                    onPress={() => {InsertPerson(search)}}
+                                >
+                                    <Text style={styles.buttonTitle}>Aggiungi in lista {search}</Text>
+                                    <FontAwesomeIcon style={{marginLeft: 10}} icon={ faPersonCirclePlus } size={ 20 } color="#ffffff" />
+                                </TouchableOpacity>
                             </View>
                         )
                     }
@@ -112,7 +153,8 @@ export default function AddGuestScreen({route, navigation }){
                             </View>
                         )
 
-                    })}
+                    })}</>
+                    )}
                 </ScrollView>
                 <TouchableOpacity
                     style={styles.button}

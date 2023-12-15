@@ -29,11 +29,11 @@ export default function EditPeopleScreen({route, navigation }) {
             .update({
                 name: name,
                 surname: surname,
-                birthday: birthday,
-                phone: phone,
-                sex: sex,
-                instagram: instagram,
-                notes: notes,
+                birthday: birthday==undefined?null:birthday,
+                phone: phone==undefined?null:phone,
+                sex: sex==undefined?null:sex,
+                instagram: instagram==undefined?null:instagram,
+                notes: notes==undefined?null:notes,
                 creator_id: person.creator_id
             })
             .then(() => {

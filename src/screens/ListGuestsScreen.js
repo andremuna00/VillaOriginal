@@ -70,6 +70,7 @@ export default function ListGuestsScreen({route, navigation }) {
 
     useEffect(() => {
         //get all guests of party with party_id
+        console.log(party.id);
         guestsRef.where("party_id", "==", party.id).onSnapshot(onCollectionUpdate);
     }, []);
 

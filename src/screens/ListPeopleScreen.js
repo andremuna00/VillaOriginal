@@ -1,13 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView,Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView,Alert,ActivityIndicator } from 'react-native';
 import { firebase } from '../firebase/config';
 import styles from './styles/global.js';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ImageBackground } from 'react-native';
-
 //display list of all people to database showing name, surname, birthday year, instagram link, edit button, delete button
 export default function ListPeopleScreen({route, navigation }){
 
@@ -101,7 +100,10 @@ export default function ListPeopleScreen({route, navigation }){
                     autoCapitalize="none"
                 />
                 <ScrollView style={{marginBottom:50, marginTop: 20}}>
-                    {people.map((person, index) => {
+                {loading ? (
+                        <ActivityIndicator size="large" color="#9e9e9e" />
+                    ) : (
+                    people.map((person, index) => {
                         return (
                             (person.name.toLowerCase().includes(search.toLowerCase())||person.surname.toLowerCase().includes(search.toLowerCase())) &&
                             <View style={styles.listItemContainer} key={person.id}>                    
@@ -117,7 +119,8 @@ export default function ListPeopleScreen({route, navigation }){
 
                                 </View>
                         )
-                    })}
+                    })
+                    )}
                 </ScrollView>
         </ImageBackground>
         </View>

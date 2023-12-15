@@ -7,6 +7,7 @@ import AsyncStorage  from '@react-native-async-storage/async-storage';
 import { ImageBackground } from 'react-native';
 import { faUser, faChampagneGlasses, faGem, faRightFromBracket, faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+
 export default function HomeScreen({route, navigation }) {
 
     //check if already logged in otherwise go to login screen using firebase
@@ -15,6 +16,13 @@ export default function HomeScreen({route, navigation }) {
     const [superadmin, setSuperAdmin] = useState(false);
     const [party, setParty] = useState(null);
     const auth = firebase.auth();
+
+    // useEffect(() => {
+    //     data["Lista 0909"].forEach((person) => {
+    //         console.log(person["NOMI"]);
+    //     });
+
+    // }, []);
 
     useEffect(() => {
         const db = firebase.firestore();
@@ -27,7 +35,38 @@ export default function HomeScreen({route, navigation }) {
                 newParty.push(party);
             });
             newParty.sort((a, b) => {
-                return new Date(a.date) - new Date(b.date);
+                try
+                {
+                    const yearA = parseInt(a.date.split('/')[3]);
+                    const yearB = parseInt(b.date.split('/')[3]);
+                    const monthA = parseInt(a.date.split('/')[2]);
+                    const monthB = parseInt(b.date.split('/')[2]);
+                    const dayA = parseInt(a.date.split('/')[1]);
+                    const dayB = parseInt(b.date.split('/')[1]);
+                    if (yearA < yearB) {
+                        return 1;
+                    }
+                    if (yearA > yearB) {
+                        return -1;
+                    }
+                    if (monthA < monthB) {
+                        return 1;
+                    }
+                    if (monthA > monthB) {
+                        return -1;
+                    }
+                    if (dayA < dayB) {
+                        return 1;
+                    }
+                    if (dayA > dayB) {
+                        return -1;
+                    }
+                }
+                catch(e)
+                {
+                    return 0;
+                }
+                    return 0;
             });
             setParty(newParty[0]);
         }
@@ -142,12 +181,12 @@ export default function HomeScreen({route, navigation }) {
                     <FontAwesomeIcon style={{marginLeft: 10}} icon={faGem} size={20} color="white" />
                 </TouchableOpacity> } 
 
-                <TouchableOpacity style={styles.button} onPress={() => admin?navigation.navigate('Party'):null}>
+                <TouchableOpacity style={styles.button} onPress={() => admin?navigation.navigate('Party'):navigation.navigate('Party')}>
                     <Text style={styles.buttonTitle}>Feste</Text>
                     <FontAwesomeIcon style={{marginLeft: 10}} icon={faChampagneGlasses} size={25} color="white" />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => admin?navigation.navigate('People'):null}>
+                <TouchableOpacity style={styles.button} onPress={() => admin?navigation.navigate('People'):navigation.navigate('People')}>
                     <Text style={styles.buttonTitle}>Persone</Text>
                     <FontAwesomeIcon style={{marginLeft: 10}} icon={faUser} size={20} color="white" />
                 </TouchableOpacity>
